@@ -8,5 +8,5 @@ make
 ```
 - Then run the compiled program using:
 ```
-java Main
+java noLabToday/Main
 ```

@@ -15,7 +15,7 @@ public class AccountManager {
   public double credit;
 
   public void checkUserIntegrity(String username) {}
-    
+
   public void getUserInformation(String username) {}
 
 }

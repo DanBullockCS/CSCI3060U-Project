@@ -16,7 +16,7 @@ public class TicketManager {
   public int numTickets;
 
   public void checkNegativeTickets() {}
-    
+
   public void getTicketInformation() {}
 
   public void checkDuplicateEvent() {}
