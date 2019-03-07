@@ -191,9 +191,14 @@ std::string User::sell(User* curr_user, std::vector<std::string> &trans_log, Fil
 
   std::getline(std::cin,  num_of_tickets);
 
+  Tickets* check_tickets = get_tickets(event_t,curr_user->getUserName(), file_stream);
+
   // error checking
   if (event_t.length() > 25){
     error = "ERR: Length of the event title is too long \n";
+
+  } else if (check_tickets != NULL){
+    error = "ERR: This event has tickets already being sold\n";
 
   } else if (event_t.length() == 0){
     error = "ERR: You did not enter in any value for the event title \n";
