@@ -5,7 +5,7 @@
 * using the "make" command in a terminal.
 *
 * To run the actual program in your terminal use the command:
-* ./ticket-seller users.ua stock.at trans.out
+* ./ticket-seller tests/users.ua tests/stock.at trans.out
 *
 * Users can complete eight different transactions and use also the exit command:
 * login, logout, create, delete, sell, buy, refund, addcredit,
@@ -143,6 +143,7 @@ int main(int argc, char** argv) {
             }
         } else {
             if (acc_type == "AA" && command == "create") {
+              // calling getAdmin() to obtain admin commands
                 error = curr_user->getAdmin()->createUser(curr_user, trans_log, file_stream);
 
             } else if (acc_type == "AA" && command == "delete") {
@@ -155,6 +156,7 @@ int main(int argc, char** argv) {
                 error = curr_user->getAdmin()->addCredit_Admin(curr_user, trans_log, file_stream);
 
             } else if (acc_type != "SS" && command == "buy") {
+              // calling commands from user class
                 error = curr_user->buy(curr_user, trans_log, file_stream);
 
             } else if (acc_type != "BS" && command == "sell") {
@@ -164,11 +166,11 @@ int main(int argc, char** argv) {
                 error = curr_user->addCredit_Standard(curr_user, trans_log, file_stream);
 
             } else if (command == "logout") {
+                // Log the logout
+                log_transaction("00 " + curr_user->getUserName() + " " + curr_user->getUserType() + " " + credit_to_log(curr_user->getCredit()), trans_log);
+
                 // Write transactions
                 curr_user = NULL;
-
-                // Log the logout
-                log_transaction("00", trans_log);
 
                 // Write the transactions to the external file
                 file_stream->writeTransactions(trans_log);
