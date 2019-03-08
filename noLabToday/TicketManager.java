@@ -11,8 +11,8 @@ package noLabToday;
 
 public class TicketManager {
   public String eventName;
-  public double price; 
-  public String String;
+  public double price;
+  public String seller;
   public int numTickets;
 
 	/*

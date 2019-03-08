@@ -24,7 +24,7 @@ public class Main {
     }
     catch (IOException e)
     {
-      System.err.println("An IOException was caught :"+ e.getMessage());
+      System.err.println("ERROR: An IOException was caught :"+ e.getMessage());
     }
   }
 }

@@ -10,12 +10,22 @@ package noLabToday;
 */
 
 public class AccountManager {
-  public String username;
-  public String type;
-  public double credit;
+  public String username; // user name of current user
+  public String type;     // account type of that user (AA, FS, BS, SS)
+  public double credit;   // the amount of credit in that users account
 
+  /*
+  * Checks that the user that was being created has a unique username
+  * @params: String username - the user name of the current user
+  * @returns: nothing
+  */
   public void checkUserIntegrity(String username) {}
 
+  /*
+  * Get all the account information from the ticket file into mutable data types
+  * @params: String username - the user name of the current user
+  * @returns: nothing
+  */
   public void getUserInformation(String username) {}
 
 }
