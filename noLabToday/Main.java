@@ -12,7 +12,10 @@ import java.io.*;
 */
 
 public class Main {
+  // Testing the verify and readFile functions for the various files
   public static final String USER_FILE = "./files/users.ua";
+  public static final String TICKETS_FILE = "./files/stock.at";
+  public static final String DAILY_TRANS_FILE = "./files/trans.out";
   public static void main(String[] args)
   {
     FileHandler handlerObj = new FileHandler();
@@ -20,7 +23,11 @@ public class Main {
     try
     {
     	handlerObj.readFile(USER_FILE);
+      handlerObj.readFile(TICKETS_FILE);
+      handlerObj.readFile(DAILY_TRANS_FILE);
       System.out.println(handlerObj.verifyUserFileFormat(USER_FILE));
+      System.out.println(handlerObj.verifyUserFileFormat(TICKETS_FILE));
+      System.out.println(handlerObj.verifyUserFileFormat(DAILY_TRANS_FILE));
     }
     catch (IOException e)
     {

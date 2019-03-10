@@ -35,7 +35,7 @@ public List<String> updateUsers() {
     return userList;
   }
   /**
-   * reads the file and stores the contents in a list of strings
+ * reads the file and stores the contents in a list of strings
  * @param fileName the name of the file in string format
  * @return returns a list of strings (the file as a list of strings)
  * @throws IOException when the file cannot be found or any issues with the i/o occur
@@ -213,8 +213,8 @@ public boolean verifyTransFileFormat(String fileName) throws java.io.IOException
   }
 
 /**
- * reads the file and stores the contents in a list of strings
-* @param fileName the name of the file in string format
+ * reads all files (users/tickets/trans) and stores the contents in a list of strings
+* @param fileNames[] the name of the files in string format
 * @return returns a list of strings (the file as a list of strings)
 * @throws IOException when the file cannot be found or any issues with the i/o occur
 */
