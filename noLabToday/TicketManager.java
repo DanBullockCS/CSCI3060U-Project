@@ -10,10 +10,10 @@ package noLabToday;
 */
 
 public class TicketManager {
-  public String eventName;
-  public double price;
-  public String seller;
-  public int numTickets;
+  public String eventName; //Title of the event on the ticket
+  public double price; // Price of the ticket
+  public String seller; // Name of the user selling the ticket
+  public int numTickets; // Number of tickets remaining
 
 	/**
 		This function is used to check the constraint of having negative tickets, and updates numTickets remaining for the specific event.
@@ -33,17 +33,23 @@ public class TicketManager {
 		}
 	}
 
-	/**
-		TODO: Still working on dis
-	*/
-  public void getTicketInformation() {
-		String message = "Eventname = " + eventName + ",\nCost = " + String.valueOf(price) + ",\nTickets remaining = " + String.valueOf(numTickets);
-		System.out.println(message);
+	/*
+  * Get all the account information from the ticket file into mutable data types
+  * @params: String eventTitle: title of the event information is being sought from.
+  * @return: nothing
+  */
+  public void getTicketInformation(String eventTitle){
+	
 	}
 
 
-	/**
-		TODO: Still working on dis
+	/*
+		This function is used to check the constraint of having duplicate events.
+		@params: nothing
+		@return: true: if a duplicate event is found.
+						 false: if no duplicate event is found.
 	*/
-  public void checkDuplicateEvent() {}
+  public boolean checkDuplicateEvent() {
+		return true;
+	} 
 }
