@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.nio.*;
 
-/*
+/**
 * Class handles reading and writing to the various ticket/user/daily trans files
 *
 * @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
@@ -12,11 +12,11 @@ import java.nio.*;
 * @version 0.1
 * @since 2019-03-05
 */
- 
+
 public class FileHandler {
- 
+
   public String fileName;
-  
+
   /**
    * The Update tickets method updates the ticket values to reflect the previous days transactions.
    * @return returns a list of strings with the new ticket lines.
@@ -58,7 +58,7 @@ public static List<String> readFile(String fileName) throws IOException {
 	  return fileAsString;
   }
   /**
- * Verifies the format of the user file 
+ * Verifies the format of the user file
  * @param fileName the name of the file in string format
  * @return returns a list of strings (the file as a list of strings)
  * @throws java.io.IOException when the file cannot be found or any issues with the i/o occur
@@ -97,15 +97,15 @@ public boolean verifyUserFileFormat(String fileName) throws java.io.IOException
 
 	  return check;
   }
+
 /**
-* Verifies the format of the stock file 
+* Verifies the format of the stock (tickets) file
 * @param fileName the name of the file in string format
 * @return returns a list of strings (the file as a list of strings)
 * @throws java.io.IOException when the file cannot be found or any issues with the i/o occur
 */
-public boolean verifyStockFileFormat(String fileName) throws java.io.IOException
+public boolean verifyTicketsFileFormat(String fileName) throws java.io.IOException
   {
-
 	  List<String> lineList = readFile(fileName);
 	  String eventName = "";
 	  String username = "";
@@ -120,7 +120,7 @@ public boolean verifyStockFileFormat(String fileName) throws java.io.IOException
 			  username = line.substring(26,42);
 			  amountOfTickets = line.substring(42,46);
 			  ticketPrice = line.substring(46,52);
-			  
+
 			  if(line.length() != 52)
 			  {
 				  check = false;
@@ -138,6 +138,7 @@ public boolean verifyStockFileFormat(String fileName) throws java.io.IOException
 	  return check;
   }
   /**
+ * Verifies the format of the daily transaction file
  * @param fileName
  * @return
  * @throws java.io.IOException
@@ -210,15 +211,16 @@ public boolean verifyTransFileFormat(String fileName) throws java.io.IOException
       }
 	  return check;
   }
+
 /**
  * reads the file and stores the contents in a list of strings
 * @param fileName the name of the file in string format
 * @return returns a list of strings (the file as a list of strings)
 * @throws IOException when the file cannot be found or any issues with the i/o occur
 */
-public List<String> readAllFiles(String fileNames[]) 
+public List<String> readAllFiles(String fileNames[])
   {
-	List<String> fileContents = new  ArrayList<String>();
+	List<String> fileContents = new ArrayList<String>();
 	return fileContents;
   }
 }

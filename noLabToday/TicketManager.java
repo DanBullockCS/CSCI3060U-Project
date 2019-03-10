@@ -1,6 +1,6 @@
 package noLabToday;
 
-/*
+/**
 * Class handles the tickets in the system, verifying their validity
 *
 * @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
@@ -15,10 +15,10 @@ public class TicketManager {
   public String seller;
   public int numTickets;
 
-	/*
+	/**
 		This function is used to check the constraint of having negative tickets, and updates numTickets remaining for the specific event.
-		@params: int ticketsPurchased - The number of tickets purchased
-		@returns: True if: Tickets are greater or equal to zero
+		@param: int ticketsPurchased - The number of tickets purchased
+		@return: True if: Tickets are greater or equal to zero
 							False if: Tickets are less than zero
 	*/
   public boolean checkNegativeTickets(int ticketsPurchased) {
@@ -33,7 +33,7 @@ public class TicketManager {
 		}
 	}
 
-	/*
+	/**
 		TODO: Still working on dis
 	*/
   public void getTicketInformation() {
@@ -42,7 +42,7 @@ public class TicketManager {
 	}
 
 
-	/*
+	/**
 		TODO: Still working on dis
 	*/
   public void checkDuplicateEvent() {}

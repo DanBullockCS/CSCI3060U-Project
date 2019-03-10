@@ -2,7 +2,7 @@ package noLabToday;
 import noLabToday.FileHandler;
 import java.io.*;
 
-/*
+/**
 * Class contains the main method that will utilize other classes to run the program
 *
 * @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
@@ -20,7 +20,7 @@ public class Main {
     try
     {
     	handlerObj.readFile(USER_FILE);
-      System.out.println(handlerObj.verifyFileFormat(USER_FILE));
+      System.out.println(handlerObj.verifyUserFileFormat(USER_FILE));
     }
     catch (IOException e)
     {
