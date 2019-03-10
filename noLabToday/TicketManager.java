@@ -23,7 +23,7 @@ public class TicketManager {
 	*/
   public boolean checkNegativeTickets(int ticketsPurchased) {
 		int remainingTickets = numTickets - ticketsPurchased;
-		if (remainingTickets >= 0){
+		if (remainingTickets >= 0) {
 			numTickets -= ticketsPurchased;
 			return true;
 		}
@@ -33,23 +33,22 @@ public class TicketManager {
 		}
 	}
 
-	/*
+	/**
   * Get all the account information from the ticket file into mutable data types
   * @params: String eventTitle: title of the event information is being sought from.
   * @return: nothing
   */
-  public void getTicketInformation(String eventTitle){
-	
+  public void getTicketInformation(String eventTitle) {
+
 	}
 
-
-	/*
-		This function is used to check the constraint of having duplicate events.
-		@params: nothing
-		@return: true: if a duplicate event is found.
+	/**
+	* This function is used to check the constraint of having duplicate events.
+	* @params: nothing
+	* @return: true: if a duplicate event is found.
 						 false: if no duplicate event is found.
 	*/
   public boolean checkDuplicateEvent() {
 		return true;
-	} 
+	}
 }
