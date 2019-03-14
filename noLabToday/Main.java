@@ -19,7 +19,6 @@ public class Main {
   public static void main(String[] args)
   {
     FileHandler handlerObj = new FileHandler();
-
     try
     {
       System.out.println(handlerObj.verifyUserFileFormat(USER_FILE));

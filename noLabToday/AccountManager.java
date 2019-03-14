@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class AccountManager {
 
-  public FileHandler filehandler = new FileHandler();
+  public FileHandler filehandler = new FileHandler(); // FileHandler class
   public String username; // user name of current user
   public String type;     // account type of that user (AA, FS, BS, SS)
   public double credit;   // the amount of credit in that users account
@@ -22,8 +22,8 @@ public class AccountManager {
   /**
   * Checks that the user that was being created has a unique username
   * @param String username - the user name of the current user
-  * @return: True if: Tickets are greater or equal to zero
-  *          False if: Tickets are less than zero
+  * @return: True if: User to be created does NOT exist in database
+  *          False if: User to be created does exists in database
   */
   public boolean checkUserIntegrity(String username) {
     List<String> account_file = new ArrayList<String>();
@@ -36,12 +36,15 @@ public class AccountManager {
     }
 
     // check if username is already in users.ua
-    if (account_file.contains(username)) {
-			return true;
-		} else {
-			System.out.println("ERROR: User to be created already exists in the database!");
-			return false;
-		}
+    for (String s: account_file) {
+      if (s.contains(username)) {
+        System.out.println("User exists in database, ok to create.");
+  			return true;
+      }
+    }
+    // User does not exist in users.ua
+    System.out.println("ERROR: User to be created already exists in the database!");
+    return false;
   }
 
   /**
