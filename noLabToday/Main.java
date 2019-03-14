@@ -22,12 +22,9 @@ public class Main {
 
     try
     {
-    	handlerObj.readFile(USER_FILE);
-      handlerObj.readFile(TICKETS_FILE);
-      handlerObj.readFile(DAILY_TRANS_FILE);
       System.out.println(handlerObj.verifyUserFileFormat(USER_FILE));
-      System.out.println(handlerObj.verifyUserFileFormat(TICKETS_FILE));
-      System.out.println(handlerObj.verifyUserFileFormat(DAILY_TRANS_FILE));
+      System.out.println(handlerObj.verifyTicketsFileFormat(TICKETS_FILE));
+      System.out.println(handlerObj.verifyTransFileFormat(DAILY_TRANS_FILE));
     }
     catch (IOException e)
     {

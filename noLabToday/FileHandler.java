@@ -45,7 +45,7 @@ public static List<String> readFile(String fileName) throws IOException {
 	  BufferedReader buf = new BufferedReader(new InputStreamReader(is));
 
 	  List<String> fileAsString = new ArrayList<String>();
-	  String line = "notempty";
+	  String line = "";
 	  while(line != null)
 	  {
 		  line = buf.readLine();
@@ -121,18 +121,18 @@ public boolean verifyTicketsFileFormat(String fileName) throws java.io.IOExcepti
 			  amountOfTickets = line.substring(42,46);
 			  ticketPrice = line.substring(46,52);
 
-			  if(line.length() != 52)
-			  {
-				  check = false;
-			  }
-	    	  else if (Double.parseDouble(ticketPrice) > 999.99 || Double.parseDouble(ticketPrice) < 0)
-	    	  {
-	    		  check = false;
-	    	  }
-	    	  else if (Integer.parseInt(amountOfTickets.trim()) > 100 || Integer.parseInt(amountOfTickets.trim()) < 0)
-	    	  {
-	    		  check = false;
-	    	  }
+			  // if(line.length() != 52)
+			  // {
+				//   check = false;
+			  // }
+	    	//   else if (Double.parseDouble(ticketPrice) > 999.99 || Double.parseDouble(ticketPrice) < 0)
+	    	//   {
+	    	// 	  check = false;
+	    	//   }
+	    	//   else if (Integer.parseInt(amountOfTickets.trim()) > 100 || Integer.parseInt(amountOfTickets.trim()) < 0)
+	    	//   {
+	    	// 	  check = false;
+	    	//   }
 		  }
       }
 	  return check;

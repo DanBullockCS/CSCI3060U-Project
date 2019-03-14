@@ -17,9 +17,9 @@ public class TicketManager {
 
 	/**
 		This function is used to check the constraint of having negative tickets, and updates numTickets remaining for the specific event.
-		@param: int ticketsPurchased - The number of tickets purchased
+		@param int ticketsPurchased - The number of tickets purchased
 		@return: True if: Tickets are greater or equal to zero
-							False if: Tickets are less than zero
+					   False if: Tickets are less than zero
 	*/
   public boolean checkNegativeTickets(int ticketsPurchased) {
 		int remainingTickets = numTickets - ticketsPurchased;
@@ -35,7 +35,7 @@ public class TicketManager {
 
 	/**
   * Get all the account information from the ticket file into mutable data types
-  * @param: String eventTitle: title of the event information is being sought from.
+  * @param String eventTitle: title of the event information is being sought from.
   * @return: nothing
   */
   public void getTicketInformation(String eventTitle) {
