@@ -66,28 +66,46 @@ public class AccountManager {
 			}
 		}
 
-    // get trans_line info in seperate variables
-    username = trans_line.substring(3, 17);
-    type = trans_line.substring(18, 21);
-    credit = Double.parseDouble(trans_line.substring(22, 30));
+    // get trans_line user info in seperate variables
+    username = trans_line.substring(3, 19);
+    type = trans_line.substring(19, 22);
+    String credit_string = trans_line.substring(22, 31);
 
-    // combine the user information
-    String combined_user = username + type + String.valueOf(credit);
+    // combine the user info
+    String combined_user = username + type + credit_string;
 
     // add the user to the userList
     filehandler.userList.add(combined_user);
-    System.out.println("Da list is: " + filehandler.userList);
     return filehandler.userList;
   }
 
+  // TODO
   public List<String> delete(List<String> userList, String trans_line) {
+    try {
+			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
+		} catch (IOException e) {
+			System.err.println("An IOException was caught :" + e.getMessage());
+		}
+
+    // get userinfo in userList
+    for (String line : userList) {
+			if (line != null) {
+				filehandler.usernamesTicketFileList.add(line.substring(0, 15).trim());
+				filehandler.typeList.add(line.substring(16, 18).trim());
+				filehandler.creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
+			}
+		}
+
+
     return filehandler.userList;
   }
 
+  // TODO
   public List<String> refund(List<String> userList, String trans_line) {
     return filehandler.userList;
   }
 
+  // TODO
   public List<String> addCredit(List<String> userList, String trans_line) {
     return filehandler.userList;
   }

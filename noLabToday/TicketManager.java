@@ -47,10 +47,12 @@ public class TicketManager {
 		return true;
 	}
 
+  // TODO Danooshan
   public List<String> buy(List<String> ticketList, String trans_line) {
     return filehandler.ticketList;
   }
 
+  // TODO Danooshan
   public List<String> sell(List<String> ticketList, String trans_line) {
     return filehandler.ticketList;
   }

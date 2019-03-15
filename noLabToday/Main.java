@@ -42,6 +42,7 @@ public class Main {
 					} else if (transCode.trim().equals("01")) {
 						// Create
 						handlerObj.userList = acctManager.create(handlerObj.userList, line);
+						System.out.println(handlerObj.userList); // showing that create works
 					} else if (transCode.trim().equals("02")) {
 						// Delete
 						handlerObj.userList = acctManager.delete(handlerObj.userList, line);
