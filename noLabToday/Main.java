@@ -23,11 +23,48 @@ public class Main {
 
 		try {
 			handlerObj.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-			System.out.println(handlerObj.verifyUserFileFormat());
-			System.out.println(handlerObj.verifyTicketsFileFormat());
-			System.out.println(handlerObj.verifyTransFileFormat());
-			handlerObj.storeTicketLineInformation();
-			handlerObj.storeUserLineInformation();
+			// System.out.println(handlerObj.verifyUserFileFormat());
+			// System.out.println(handlerObj.verifyTicketsFileFormat());
+			// System.out.println(handlerObj.verifyTransFileFormat());
+			// handlerObj.storeTicketLineInformation();
+			// handlerObj.storeUserLineInformation();
+			// Reading the daily trans to do the transactions
+			handlerObj.transList = handlerObj.readFile(TRANS_FILE);
+			AccountManager acctManager = new AccountManager();
+			TicketManager tickManager = new TicketManager();
+			String transCode = "";
+
+			for (String line : handlerObj.transList) {
+				if (line != null) {
+					transCode = line.substring(0, 2);
+					if (transCode.trim().equals("00")) {
+						// Save buyer for TicketManager class
+					} else if (transCode.trim().equals("01")) {
+						// Create
+						handlerObj.userList = acctManager.create(handlerObj.userList, line);
+					} else if (transCode.trim().equals("02")) {
+						// Delete
+						handlerObj.userList = acctManager.delete(handlerObj.userList, line);
+					} else if (transCode.trim().equals("03")) {
+						// Sell
+						// TODO: Danooshan
+						//handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line);
+					} else if (transCode.trim().equals("04")) {
+						// Buy
+						// TODO: Danooshan
+						//handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line);
+					} else if (transCode.trim().equals("05")) {
+						// Refund
+						handlerObj.userList = acctManager.refund(handlerObj.userList, line);
+					} else if (transCode.trim().equals("06")) {
+						// addCredit
+						handlerObj.userList = acctManager.addCredit(handlerObj.userList, line);
+					} else {
+
+					}
+				}
+			}
+
 		} catch (IOException e) {
 			System.err.println("An IOException was caught :" + e.getMessage());
 		}

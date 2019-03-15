@@ -13,6 +13,9 @@ import java.util.ArrayList;
 */
 
 public class AccountManager {
+  public static final String USER_FILE = "./files/users.ua";
+	public static final String STOCK_FILE = "./files/stock.at";
+	public static final String TRANS_FILE = "./files/trans.out";
 
   public FileHandler filehandler = new FileHandler(); // FileHandler class
   public String username; // user name of current user
@@ -28,7 +31,7 @@ public class AccountManager {
   public boolean checkUserIntegrity(String username) {
     List<String> account_file = new ArrayList<String>();
     try {
-      account_file = filehandler.readFile("./files/users.ua");
+      account_file = filehandler.readFile(USER_FILE);
     }
     catch (IOException e)
     {
@@ -47,13 +50,46 @@ public class AccountManager {
     return false;
   }
 
-  /**
-  * Get all the account information from the ticket file into mutable data types
-  * @param String username - the user name of the current user
-  * @return: nothing
-  */
-  public void getUserInformation(String username) {
+  public List<String> create(List<String> userList, String trans_line) {
+    try {
+			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
+		} catch (IOException e) {
+			System.err.println("An IOException was caught :" + e.getMessage());
+		}
 
+    // get userinfo in userList
+    for (String line : userList) {
+			if (line != null) {
+				filehandler.usernamesTicketFileList.add(line.substring(0, 15).trim());
+				filehandler.typeList.add(line.substring(16, 18).trim());
+				filehandler.creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
+			}
+		}
+
+    // get trans_line info in seperate variables
+    username = trans_line.substring(3, 17);
+    type = trans_line.substring(18, 21);
+    credit = Double.parseDouble(trans_line.substring(22, 30));
+
+    // combine the user information
+    String combined_user = username + type + String.valueOf(credit);
+
+    // add the user to the userList
+    filehandler.userList.add(combined_user);
+    System.out.println("Da list is: " + filehandler.userList);
+    return filehandler.userList;
+  }
+
+  public List<String> delete(List<String> userList, String trans_line) {
+    return filehandler.userList;
+  }
+
+  public List<String> refund(List<String> userList, String trans_line) {
+    return filehandler.userList;
+  }
+
+  public List<String> addCredit(List<String> userList, String trans_line) {
+    return filehandler.userList;
   }
 
 }

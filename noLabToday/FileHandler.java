@@ -18,24 +18,24 @@ import java.nio.*;
 public class FileHandler {
 
 	public String fileName;
-	
+
 	public List<String> usernamesUserFileList = new ArrayList<String>();
 	public List<Double> creditsList = new ArrayList<>();
 	public List<String> typeList = new ArrayList<String>();
-	
+
 	public List<String> usernamesTicketFileList = new ArrayList<String>();
 	public List<String> eventNameList = new ArrayList<String>();
 	public List<Integer> amountOfTicketsList = new ArrayList<>();
 	public List<Double> ticketPriceList = new ArrayList<>();
-	
-	private List<String> userList = new ArrayList<String>();
-	private List<String> ticketList = new ArrayList<String>();
-	private List<String> transList = new ArrayList<String>();
+
+	public List<String> userList = new ArrayList<String>();
+	public List<String> ticketList = new ArrayList<String>();
+	public List<String> transList = new ArrayList<String>();
 
 	/**
 	 * The Update tickets method updates the ticket values to reflect the previous
 	 * days transactions.
-	 * 
+	 *
 	 * @return returns a list of strings with the new ticket lines.
 	 */
 	public List<String> updateTickets() {
@@ -46,40 +46,40 @@ public class FileHandler {
 	/**
 	 * The Update users method updates the user values to reflect the previous days
 	 * transactions.
-	 * 
+	 *
 	 * @return
 	 */
 	public List<String> updateUsers() {
 		List<String> userList = new ArrayList<String>();
 		return userList;
 	}
+
 	public void initializeFiles(String userFile, String ticketsFile, String transFile) throws IOException
 	{
-	    userList = readFile(userFile);
+	  userList = readFile(userFile);
 		ticketList = readFile(ticketsFile);
 		transList = readFile(transFile);
 
 	}
-	public void storeUserLineInformation()
-	{
-		for (String line : this.userList) {
-			if (line != null) 
-			{
-				usernamesTicketFileList.add(line.substring(0, 15).trim());
-				typeList.add(line.substring(16, 18).trim());
-				creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
-			}
-		}
-		System.out.println(usernamesTicketFileList);
-		System.out.println(typeList);
-		System.out.println(creditsList);
-		
-		
-	}
+	// I ended up doing this in AccountManager
+	// public void storeUserLineInformation()
+	// {
+	// 	for (String line : this.userList) {
+	// 		if (line != null)
+	// 		{
+	// 			usernamesTicketFileList.add(line.substring(0, 15).trim());
+	// 			typeList.add(line.substring(16, 18).trim());
+	// 			creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
+	// 		}
+	// 	}
+	// 	System.out.println(usernamesTicketFileList);
+	// 	System.out.println(typeList);
+	// 	System.out.println(creditsList);
+	// }
 	public void storeTicketLineInformation()
 	{
 		for (String line : this.ticketList) {
-			if (line != null) 
+			if (line != null)
 			{
 				eventNameList.add(line.substring(0, 26).trim());
 				usernamesUserFileList.add(line.substring(26, 42).trim());
@@ -91,12 +91,10 @@ public class FileHandler {
 		System.out.println(usernamesUserFileList);
 		System.out.println(amountOfTicketsList);
 		System.out.println(ticketPriceList);
-		
-		
 	}
 	/**
 	 * reads the file and stores the contents in a list of strings
-	 * 
+	 *
 	 * @param fileName the name of the file in string format
 	 * @return returns a list of strings (the file as a list of strings)
 	 * @throws IOException when the file cannot be found or any issues with the i/o
@@ -120,14 +118,14 @@ public class FileHandler {
 
 	/**
 	 * Verifies the format of the user file
-	 * 
+	 *
 	 * @param fileName the name of the file in string format
 	 * @return returns a list of strings (the file as a list of strings)
 	 * @throws java.io.IOException when the file cannot be found or any issues with
 	 *         the i/o occur
 	 */
 	public boolean verifyUserFileFormat() throws java.io.IOException {
-		
+
 		String username = "";
 		String type = "";
 		String credit = "";
@@ -148,13 +146,13 @@ public class FileHandler {
 			}
 
 		}
-		
+
 		return check;
 	}
 
 	/**
 	 * Verifies the format of the stock (tickets) file
-	 * 
+	 *
 	 * @param fileName the name of the file in string format
 	 * @return returns a list of strings (the file as a list of strings)
 	 * @throws java.io.IOException when the file cannot be found or any issues with
@@ -188,13 +186,12 @@ public class FileHandler {
 
 	/**
 	 * Verifies the format of the daily transaction file
-	 * 
+	 *
 	 * @param fileName
 	 * @return
 	 * @throws java.io.IOException
 	 */
 	public boolean verifyTransFileFormat() throws java.io.IOException {
-
 		boolean check = true;
 		String transCode = "";
 		for (String line : this.transList) {
@@ -239,7 +236,7 @@ public class FileHandler {
 	/**
 	 * reads all files (users/tickets/trans) and stores the contents in a list of
 	 * strings
-	 * 
+	 *
 	 * @param fileNames[] the name of the files in string format
 	 * @return returns a list of strings (the file as a list of strings)
 	 * @throws IOException when the file cannot be found or any issues with the i/o
