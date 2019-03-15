@@ -5,7 +5,7 @@
 * using the "make" command in a terminal.
 *
 * To run the actual program in your terminal use the command:
-* ./ticket-seller tests/users.ua tests/stock.at trans.out
+* ./ticket-seller users.ua stock.at trans.out
 *
 * Users can complete eight different transactions and use also the exit command:
 * login, logout, create, delete, sell, buy, refund, addcredit,
@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
       curr_trans_file = argv[3];
     } else {
       std::cout << "Incorrect filename arguments, please run the program as follows:\n"
-                << "./ticket-seller tests/users.ua tests/stock.at trans.out" << std::endl;
+                << "./ticket-seller users.ua stock.at trans.out" << std::endl;
       return 0;
     }
 

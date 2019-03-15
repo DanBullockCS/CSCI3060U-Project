@@ -12,10 +12,8 @@ import java.util.ArrayList;
 * @since 2019-03-05
 */
 
-public class AccountManager {
-  public static final String USER_FILE = "./files/users.ua";
-	public static final String STOCK_FILE = "./files/stock.at";
-	public static final String TRANS_FILE = "./files/trans.out";
+// get filenames from main
+public class AccountManager extends Main {
 
   public FileHandler filehandler = new FileHandler(); // FileHandler class
   public String username; // user name of current user
@@ -41,29 +39,26 @@ public class AccountManager {
     // check if username is already in users.ua
     for (String s: account_file) {
       if (s.contains(username)) {
-        System.out.println("User exists in database, ok to create.");
-  			return true;
+        System.out.println("User exists in the database.");
+  			return false;
       }
     }
     // User does not exist in users.ua
-    System.out.println("ERROR: User to be created already exists in the database!");
-    return false;
+    System.out.println("User is not in database.");
+    return true;
   }
 
+  /**
+  * Create the new user passed in from the daily trans file
+  * @param List<String> userList - a list of all the users in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> filehandler.userList with the newly created user
+  */
   public List<String> create(List<String> userList, String trans_line) {
     try {
 			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
 		} catch (IOException e) {
 			System.err.println("An IOException was caught :" + e.getMessage());
-		}
-
-    // get userinfo in userList
-    for (String line : userList) {
-			if (line != null) {
-				filehandler.usernamesTicketFileList.add(line.substring(0, 15).trim());
-				filehandler.typeList.add(line.substring(16, 18).trim());
-				filehandler.creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
-			}
 		}
 
     // get trans_line user info in seperate variables
@@ -74,39 +69,97 @@ public class AccountManager {
     // combine the user info
     String combined_user = username + type + credit_string;
 
-    // add the user to the userList
-    filehandler.userList.add(combined_user);
+    // check if user is in users.ua, if not, add (create)
+    if (checkUserIntegrity(username) == true) {
+      System.out.println("Creating user: " + username);
+      filehandler.userList.add(combined_user);
+    }
+
     return filehandler.userList;
   }
 
-  // TODO
+  /**
+  * Delete a user passed in from the daily trans file
+  * @param List<String> userList - a list of all the users in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> filehandler.userList without the deleted user
+  */
   public List<String> delete(List<String> userList, String trans_line) {
     try {
 			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
 		} catch (IOException e) {
 			System.err.println("An IOException was caught :" + e.getMessage());
 		}
+    // finds the username and delete that index
+    int i = 0, deletion_index = 0;
+    username = trans_line.substring(3, 19);
 
     // get userinfo in userList
-    for (String line : userList) {
+    for (String line : filehandler.userList) {
 			if (line != null) {
-				filehandler.usernamesTicketFileList.add(line.substring(0, 15).trim());
-				filehandler.typeList.add(line.substring(16, 18).trim());
-				filehandler.creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
-			}
+        if (line.contains(username)) {
+          deletion_index = i;
+        }
+        i++;
+      }
 		}
 
+    // check if user is in users.ua, if it is, remove (delete)
+    if (checkUserIntegrity(username) == false) {
+      System.out.println("Deleting user: " + username);
+     // full List
+      filehandler.userList.remove(filehandler.userList.get(deletion_index));
+      // sublists
+      // filehandler.usernamesTicketFileList.remove(filehandler.userList.get(deletion_index));
+      // filehandler.typeList.remove(filehandler.userList.get(deletion_index));
+      // filehandler.creditsList.remove(filehandler.userList.get(deletion_index));
+    }
 
     return filehandler.userList;
   }
 
-  // TODO
+  /**TODO
+  * Delete a user passed in from the daily trans file
+  * @param List<String> userList - a list of all the users in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> filehandler.userList with the user refunded their credits
+  */
   public List<String> refund(List<String> userList, String trans_line) {
     return filehandler.userList;
   }
 
-  // TODO
+  /**TODO
+  * Delete a user passed in from the daily trans file
+  * @param List<String> userList - a list of all the users in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> filehandler.userList with the user added more credit
+  */
   public List<String> addCredit(List<String> userList, String trans_line) {
+    try {
+			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
+		} catch (IOException e) {
+			System.err.println("An IOException was caught :" + e.getMessage());
+		}
+
+    // get trans_line user info in seperate variables
+    username = trans_line.substring(3, 19);
+    type = trans_line.substring(19, 22);
+    credit = Double.parseDouble(trans_line.substring(22, 31));
+    String credit_string = trans_line.substring(22, 31);
+
+    // combine the user info
+    String combined_user = username + type + credit_string;
+    // check if user is in users.ua, if not, add (create)
+    if (checkUserIntegrity(username) == true) {
+      System.out.println("Adding " + credit_string + " to user: " + username);
+      // remove from the list
+      filehandler.userList.remove(combined_user);
+
+      // add back the user with credit added
+      combined_user = "";
+
+      filehandler.userList.add(combined_user);
+    }
     return filehandler.userList;
   }
 

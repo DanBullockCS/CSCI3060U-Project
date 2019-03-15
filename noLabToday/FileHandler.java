@@ -59,8 +59,8 @@ public class FileHandler {
 	  userList = readFile(userFile);
 		ticketList = readFile(ticketsFile);
 		transList = readFile(transFile);
-
 	}
+	
 	// I ended up doing this in AccountManager
 	// public void storeUserLineInformation()
 	// {
