@@ -134,9 +134,8 @@ public class AccountManager extends Main {
     if (Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) - credit >= 0) {
       new_buyer_credit = Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) + credit;
       new_seller_credit =  Double.parseDouble(userList.get(seller_index).substring(19, 28).trim()) - credit;
-      // somehow a space was lost so I had to add one, I can't figure out where...
-      type = userList.get(buyer_index).substring(16, 19).trim() + " ";
-      seller_type = userList.get(seller_index).substring(16, 19).trim() + " ";
+      type = userList.get(buyer_index).substring(16, 19);
+      seller_type = userList.get(seller_index).substring(16, 19);
 
       // add the leading zeros to the string
       new_buyer_credit_str = ("00000000" + String.valueOf(new_buyer_credit)).substring(String.valueOf(new_buyer_credit).length());
