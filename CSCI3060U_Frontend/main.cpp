@@ -14,8 +14,8 @@
 * Once in the transaction sequence, just follow the instructions the program outputs to you.
 *
 * Input files:
-* tests/users.ua (the current users file)
-* tests/stock.at (the available tickets file)
+* users.ua (the current users file)
+* stock.at (the available tickets file)
 * Output files:
 * trans.out (the daily transaction file)
 *

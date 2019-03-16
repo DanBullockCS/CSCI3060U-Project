@@ -52,15 +52,9 @@ public class AccountManager extends Main {
   * Create the new user passed in from the daily trans file
   * @param List<String> userList - a list of all the users in the system
   * @param String trans_line - containing the current line from the daily trans file
-  * @return: The List<String> filehandler.userList with the newly created user
+  * @return: The List<String> userList with the newly created user
   */
   public List<String> create(List<String> userList, String trans_line) {
-    try {
-			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-		} catch (IOException e) {
-			System.err.println("An IOException was caught :" + e.getMessage());
-		}
-
     // get trans_line user info in seperate variables
     username = trans_line.substring(3, 19);
     type = trans_line.substring(19, 22);
@@ -71,31 +65,26 @@ public class AccountManager extends Main {
 
     // check if user is in users.ua, if not, add (create)
     if (checkUserIntegrity(username) == true) {
-      System.out.println("Creating user: " + username);
-      filehandler.userList.add(combined_user);
+      System.out.println("Creating user: " + username + "...");
+      userList.add(combined_user);
     }
 
-    return filehandler.userList;
+    return userList;
   }
 
   /**
   * Delete a user passed in from the daily trans file
   * @param List<String> userList - a list of all the users in the system
   * @param String trans_line - containing the current line from the daily trans file
-  * @return: The List<String> filehandler.userList without the deleted user
+  * @return: The List<String> userList without the deleted user
   */
   public List<String> delete(List<String> userList, String trans_line) {
-    try {
-			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-		} catch (IOException e) {
-			System.err.println("An IOException was caught :" + e.getMessage());
-		}
     // finds the username and delete that index
     int i = 0, deletion_index = 0;
     username = trans_line.substring(3, 19);
 
     // get userinfo in userList
-    for (String line : filehandler.userList) {
+    for (String line : userList) {
 			if (line != null) {
         if (line.contains(username)) {
           deletion_index = i;
@@ -106,61 +95,71 @@ public class AccountManager extends Main {
 
     // check if user is in users.ua, if it is, remove (delete)
     if (checkUserIntegrity(username) == false) {
-      System.out.println("Deleting user: " + username);
-     // full List
-      filehandler.userList.remove(filehandler.userList.get(deletion_index));
-      // sublists
-      // filehandler.usernamesTicketFileList.remove(filehandler.userList.get(deletion_index));
-      // filehandler.typeList.remove(filehandler.userList.get(deletion_index));
-      // filehandler.creditsList.remove(filehandler.userList.get(deletion_index));
+      System.out.println("Deleting user: " + username + "...");
+      userList.remove(userList.get(deletion_index));
     }
 
-    return filehandler.userList;
+    return userList;
   }
 
   /**TODO
-  * Delete a user passed in from the daily trans file
+  * refund the users passed in from the daily trans file
   * @param List<String> userList - a list of all the users in the system
   * @param String trans_line - containing the current line from the daily trans file
-  * @return: The List<String> filehandler.userList with the user refunded their credits
+  * @return: The List<String> userList with the user refunded their credits
   */
   public List<String> refund(List<String> userList, String trans_line) {
-    return filehandler.userList;
+    return userList;
   }
 
-  /**TODO
-  * Delete a user passed in from the daily trans file
+  /**
+  * Addcredit to a user passed in the daily trans file
   * @param List<String> userList - a list of all the users in the system
   * @param String trans_line - containing the current line from the daily trans file
-  * @return: The List<String> filehandler.userList with the user added more credit
+  * @return: The List<String> userList with the user added more credit
   */
   public List<String> addCredit(List<String> userList, String trans_line) {
-    try {
-			filehandler.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-		} catch (IOException e) {
-			System.err.println("An IOException was caught :" + e.getMessage());
-		}
-
     // get trans_line user info in seperate variables
     username = trans_line.substring(3, 19);
     type = trans_line.substring(19, 22);
     credit = Double.parseDouble(trans_line.substring(22, 31));
     String credit_string = trans_line.substring(22, 31);
 
+    // find the user who is getting the addCredit
+    int i = 0, index = 0;
+    for (String line : userList) {
+			if (line != null) {
+        if (line.contains(username)) {
+          index = i;
+        }
+        i++;
+      }
+    }
+
+    // the credit string of the user getting credit added to them
+    String old_credit_string = userList.get(index).substring(19, 28).trim();
+    Double old_credit = Double.parseDouble(userList.get(index).substring(19, 28).trim());
+    Double new_credit = old_credit + credit;
+    // add the leading zeros to the string
+    String new_credit_string = ("00000000" + String.valueOf(new_credit)).substring(String.valueOf(new_credit).length());
+    // if only one decimal place in string add another "0"
+    if (new_credit_string.length() == 8) {
+      new_credit_string += "0";
+    }
+
     // combine the user info
     String combined_user = username + type + credit_string;
     // check if user is in users.ua, if not, add (create)
-    if (checkUserIntegrity(username) == true) {
-      System.out.println("Adding " + credit_string + " to user: " + username);
+    if (checkUserIntegrity(username) == false) {
+      System.out.println("Adding " + credit_string + " to user: " + username + "...");
       // remove from the list
-      filehandler.userList.remove(combined_user);
+      userList.remove(combined_user);
 
       // add back the user with credit added
-      combined_user = "";
-
-      filehandler.userList.add(combined_user);
+      combined_user = username + type + new_credit_string;
+      userList.add(combined_user);
     }
-    return filehandler.userList;
+    return userList;
   }
 
 }

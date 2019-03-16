@@ -49,7 +49,6 @@ public class Main {
 						// Create
 						handlerObj.userList = acctManager.create(handlerObj.userList, line);
 						System.out.println(handlerObj.userList); // showing that create works
-						continue;
 					} else if (transCode.trim().equals("02")) {
 						// Delete
 						handlerObj.userList = acctManager.delete(handlerObj.userList, line);
@@ -66,8 +65,8 @@ public class Main {
 						//System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("05")) {
 						// Refund
-						handlerObj.userList = acctManager.refund(handlerObj.userList, line);
-						System.out.println(handlerObj.userList);
+						//handlerObj.userList = acctManager.refund(handlerObj.userList, line);
+						//System.out.println(handlerObj.userList);
 					} else if (transCode.trim().equals("06")) {
 						// addCredit
 						handlerObj.userList = acctManager.addCredit(handlerObj.userList, line);

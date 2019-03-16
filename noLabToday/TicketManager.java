@@ -47,14 +47,24 @@ public class TicketManager {
 		return true;
 	}
 
-  // TODO Danooshan
+  /** TODO Danooshan
+  * do buy transaction in ticketList
+  * @param List<String> ticketList - a list of all the tickets in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> ...
+  */
   public List<String> buy(List<String> ticketList, String trans_line) {
-    return filehandler.ticketList;
+    return ticketList;
   }
 
-  // TODO Danooshan
+  /** TODO Danooshan
+  * do sell transaction in ticketList
+  * @param List<String> ticketList - a list of all the tickets in the system
+  * @param String trans_line - containing the current line from the daily trans file
+  * @return: The List<String> ...
+  */
   public List<String> sell(List<String> ticketList, String trans_line) {
-    return filehandler.ticketList;
+    return ticketList;
   }
 
 }
