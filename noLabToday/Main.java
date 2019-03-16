@@ -59,14 +59,14 @@ public class Main {
 						// Sell
 						System.out.println("\nStarting Sell:");
 						// TODO: Danooshan
-						//handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line);
+						//handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line, handlerObj.transList);
 						//System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("04")) {
 						// Buy
 						System.out.println("\nStarting Buy:");
 						// TODO: Danooshan
-						//handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line);
-						//System.out.println(handlerObj.ticketList);
+						handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line, handlerObj.transList);
+						System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("05")) {
 						// Refund
 						System.out.println("\nStarting Refund:");
