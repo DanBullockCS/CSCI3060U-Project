@@ -65,7 +65,7 @@ public class AccountManager extends Main {
 
     // check if user is in users.ua, if not, add (create)
     if (checkUserIntegrity(username) == true) {
-      System.out.println("Creating user: " + username + "...");
+      System.out.println("Creating user: " + username);
       userList.add(combined_user);
     }
 
@@ -102,13 +102,81 @@ public class AccountManager extends Main {
     return userList;
   }
 
-  /**TODO
+  /**
   * refund the users passed in from the daily trans file
   * @param List<String> userList - a list of all the users in the system
   * @param String trans_line - containing the current line from the daily trans file
   * @return: The List<String> userList with the user refunded their credits
   */
   public List<String> refund(List<String> userList, String trans_line) {
+    // get trans_line user info in seperate variables
+    username = trans_line.substring(3, 19);
+    String seller_username = trans_line.substring(19, 35);
+    // amount to get refunded
+    credit = Double.parseDouble(trans_line.substring(35, 44));
+    String credit_string = trans_line.substring(35, 44);
+    // buyer and seller variables
+    Double new_buyer_credit = 0.00, new_seller_credit = 0.00;
+    String new_buyer_credit_str, new_seller_credit_str;
+    type = "";
+    String seller_type = "";
+
+    // find the users' index in the userList
+    int i = 0, buyer_index = 0, seller_index = 0;
+    for (String line : userList) {
+			if (line != null) {
+        if (line.contains(username)) {
+          buyer_index = i;
+        }
+        if (line.contains(seller_username)) {
+          seller_index = i;
+        }
+        i++;
+      }
+    }
+
+    if (Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) - credit >= 0) {
+      new_buyer_credit = Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) + credit;
+      new_seller_credit =  Double.parseDouble(userList.get(seller_index).substring(19, 28).trim()) - credit;
+      type = userList.get(buyer_index).substring(19, 22).trim();
+      seller_type = userList.get(buyer_index).substring(19, 22).trim();
+    } else {
+      System.out.println("ERROR: Credit cannot be refunded fully since seller does not have enough credit");
+      new_seller_credit_str = "000000.00";
+    }
+
+    // add the leading zeros to the string
+    new_buyer_credit_str = ("00000000" + String.valueOf(new_buyer_credit)).substring(String.valueOf(new_buyer_credit).length());
+    new_seller_credit_str = ("00000000" + String.valueOf(new_seller_credit)).substring(String.valueOf(new_seller_credit).length());
+    // if only one decimal place in string add another "0"
+    if (new_buyer_credit_str.length() == 8) {
+      new_buyer_credit_str += "0";
+    }
+    if (new_seller_credit_str.length() == 8) {
+      new_seller_credit_str += "0";
+    }
+
+    // combine the user info
+    String combined_buy_user = username + type + new_buyer_credit_str;
+    String combined_sell_user = seller_username + type + new_seller_credit_str;
+    //
+    if (checkUserIntegrity(username) == false && checkUserIntegrity(seller_username) == false) {
+      System.out.println("Adding " + credit_string + " to user: " + username);
+      // remove the old versions of the users from the list
+      userList.remove(buyer_index);
+      userList.remove(seller_index);
+      // add back the users after the refund
+      combined_buy_user = username + type + new_buyer_credit_str;
+      combined_sell_user = seller_username + type + new_seller_credit_str;
+      // check that user is not refunding to themself
+      if (username != seller_username) {
+        userList.add(combined_buy_user);
+        userList.add(combined_sell_user);
+      // admin user is refunding to themself
+      } else {
+        userList.add(combined_sell_user);
+      }
+    }
     return userList;
   }
 
@@ -137,9 +205,7 @@ public class AccountManager extends Main {
     }
 
     // the credit string of the user getting credit added to them
-    String old_credit_string = userList.get(index).substring(19, 28).trim();
-    Double old_credit = Double.parseDouble(userList.get(index).substring(19, 28).trim());
-    Double new_credit = old_credit + credit;
+    Double new_credit = Double.parseDouble(userList.get(index).substring(19, 28).trim()) + credit;
     // add the leading zeros to the string
     String new_credit_string = ("00000000" + String.valueOf(new_credit)).substring(String.valueOf(new_credit).length());
     // if only one decimal place in string add another "0"
@@ -149,11 +215,11 @@ public class AccountManager extends Main {
 
     // combine the user info
     String combined_user = username + type + credit_string;
-    // check if user is in users.ua, if not, add (create)
+    // check if user is in users.ua, if they are, add (addCredit)
     if (checkUserIntegrity(username) == false) {
-      System.out.println("Adding " + credit_string + " to user: " + username + "...");
+      System.out.println("Adding " + credit_string + " to user: " + username);
       // remove from the list
-      userList.remove(combined_user);
+      userList.remove(index);
 
       // add back the user with credit added
       combined_user = username + type + new_credit_string;
