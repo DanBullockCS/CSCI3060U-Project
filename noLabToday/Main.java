@@ -47,28 +47,34 @@ public class Main {
 						// Save buyer for TicketManager class
 					} else if (transCode.trim().equals("01")) {
 						// Create
+						System.out.println("\nStarting Create:");
 						handlerObj.userList = acctManager.create(handlerObj.userList, line);
 						System.out.println(handlerObj.userList); // showing that create works
 					} else if (transCode.trim().equals("02")) {
 						// Delete
+						System.out.println("\nStarting Delete:");
 						handlerObj.userList = acctManager.delete(handlerObj.userList, line);
 						System.out.println(handlerObj.userList);
 					} else if (transCode.trim().equals("03")) {
 						// Sell
+						System.out.println("\nStarting Sell:");
 						// TODO: Danooshan
 						//handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line);
 						//System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("04")) {
 						// Buy
+						System.out.println("\nStarting Buy:");
 						// TODO: Danooshan
 						//handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line);
 						//System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("05")) {
 						// Refund
+						System.out.println("\nStarting Refund:");
 						handlerObj.userList = acctManager.refund(handlerObj.userList, line);
 						System.out.println(handlerObj.userList);
 					} else if (transCode.trim().equals("06")) {
 						// addCredit
+						System.out.println("\nStarting addCredit:");
 						handlerObj.userList = acctManager.addCredit(handlerObj.userList, line);
 						System.out.println(handlerObj.userList);
 					} else {

@@ -23,8 +23,8 @@ public class AccountManager extends Main {
   /**
   * Checks that the user that was being created has a unique username
   * @param String username - the user name of the current user
-  * @return: True if: User to be created does NOT exist in database
-  *          False if: User to be created does exists in database
+  * @return: True if: User to be created does exist in database
+  *          False if: User to be created does NOT exists in database
   */
   public boolean checkUserIntegrity(String username) {
     List<String> account_file = new ArrayList<String>();
@@ -40,12 +40,12 @@ public class AccountManager extends Main {
     for (String s: account_file) {
       if (s.contains(username)) {
         System.out.println("User exists in the database.");
-  			return false;
+  			return true;
       }
     }
     // User does not exist in users.ua
     System.out.println("User is not in database.");
-    return true;
+    return false;
   }
 
   /**
@@ -64,7 +64,7 @@ public class AccountManager extends Main {
     String combined_user = username + type + credit_string;
 
     // check if user is in users.ua, if not, add (create)
-    if (checkUserIntegrity(username) == true) {
+    if (checkUserIntegrity(username) == false) {
       System.out.println("Creating user: " + username);
       userList.add(combined_user);
     }
@@ -94,8 +94,8 @@ public class AccountManager extends Main {
 		}
 
     // check if user is in users.ua, if it is, remove (delete)
-    if (checkUserIntegrity(username) == false) {
-      System.out.println("Deleting user: " + username + "...");
+    if (checkUserIntegrity(username) == true) {
+      System.out.println("Deleting user: " + username);
       userList.remove(userList.get(deletion_index));
     }
 
@@ -117,64 +117,57 @@ public class AccountManager extends Main {
     String credit_string = trans_line.substring(35, 44);
     // buyer and seller variables
     Double new_buyer_credit = 0.00, new_seller_credit = 0.00;
-    String new_buyer_credit_str, new_seller_credit_str;
-    type = "";
+    String new_buyer_credit_str = "", new_seller_credit_str = "";
     String seller_type = "";
 
     // find the users' index in the userList
     int i = 0, buyer_index = 0, seller_index = 0;
     for (String line : userList) {
 			if (line != null) {
-        if (line.contains(username)) {
-          buyer_index = i;
-        }
-        if (line.contains(seller_username)) {
-          seller_index = i;
-        }
+        if (line.contains(username)) { buyer_index = i; }
+        if (line.contains(seller_username)) { seller_index = i; }
         i++;
       }
     }
 
+    // Check if the user giving the refund has enough credit to give the refund
     if (Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) - credit >= 0) {
       new_buyer_credit = Double.parseDouble(userList.get(buyer_index).substring(19, 28).trim()) + credit;
       new_seller_credit =  Double.parseDouble(userList.get(seller_index).substring(19, 28).trim()) - credit;
-      type = userList.get(buyer_index).substring(19, 22).trim();
-      seller_type = userList.get(buyer_index).substring(19, 22).trim();
+      // somehow a space was lost so I had to add one, I can't figure out where...
+      type = userList.get(buyer_index).substring(16, 19).trim() + " ";
+      seller_type = userList.get(seller_index).substring(16, 19).trim() + " ";
+
+      // add the leading zeros to the string
+      new_buyer_credit_str = ("00000000" + String.valueOf(new_buyer_credit)).substring(String.valueOf(new_buyer_credit).length());
+      new_seller_credit_str = ("00000000" + String.valueOf(new_seller_credit)).substring(String.valueOf(new_seller_credit).length());
+
+      // if only one decimal place in string add another "0"
+      if (new_buyer_credit_str.length() == 8) { new_buyer_credit_str += "0"; }
+      if (new_seller_credit_str.length() == 8) { new_seller_credit_str += "0"; }
     } else {
       System.out.println("ERROR: Credit cannot be refunded fully since seller does not have enough credit");
       new_seller_credit_str = "000000.00";
     }
 
-    // add the leading zeros to the string
-    new_buyer_credit_str = ("00000000" + String.valueOf(new_buyer_credit)).substring(String.valueOf(new_buyer_credit).length());
-    new_seller_credit_str = ("00000000" + String.valueOf(new_seller_credit)).substring(String.valueOf(new_seller_credit).length());
-    // if only one decimal place in string add another "0"
-    if (new_buyer_credit_str.length() == 8) {
-      new_buyer_credit_str += "0";
-    }
-    if (new_seller_credit_str.length() == 8) {
-      new_seller_credit_str += "0";
-    }
-
     // combine the user info
     String combined_buy_user = username + type + new_buyer_credit_str;
-    String combined_sell_user = seller_username + type + new_seller_credit_str;
-    //
-    if (checkUserIntegrity(username) == false && checkUserIntegrity(seller_username) == false) {
+    String combined_sell_user = seller_username + seller_type + new_seller_credit_str;
+
+    // if buyer and seller are in users file
+    if (checkUserIntegrity(username) == true && checkUserIntegrity(seller_username) == true) {
       System.out.println("Adding " + credit_string + " to user: " + username);
-      // remove the old versions of the users from the list
-      userList.remove(buyer_index);
-      userList.remove(seller_index);
-      // add back the users after the refund
-      combined_buy_user = username + type + new_buyer_credit_str;
-      combined_sell_user = seller_username + type + new_seller_credit_str;
       // check that user is not refunding to themself
       if (username != seller_username) {
-        userList.add(combined_buy_user);
-        userList.add(combined_sell_user);
+        // remove the old versions of the buyer from the list
+        userList.remove(buyer_index);
+        userList.add(buyer_index, combined_buy_user);
+        userList.remove(seller_index);
+        userList.add(seller_index, combined_sell_user);
       // admin user is refunding to themself
       } else {
-        userList.add(combined_sell_user);
+        userList.remove(seller_index);
+        userList.add(seller_index, combined_sell_user);
       }
     }
     return userList;
@@ -197,9 +190,7 @@ public class AccountManager extends Main {
     int i = 0, index = 0;
     for (String line : userList) {
 			if (line != null) {
-        if (line.contains(username)) {
-          index = i;
-        }
+        if (line.contains(username)) { index = i; }
         i++;
       }
     }
@@ -209,21 +200,18 @@ public class AccountManager extends Main {
     // add the leading zeros to the string
     String new_credit_string = ("00000000" + String.valueOf(new_credit)).substring(String.valueOf(new_credit).length());
     // if only one decimal place in string add another "0"
-    if (new_credit_string.length() == 8) {
-      new_credit_string += "0";
-    }
-
+    if (new_credit_string.length() == 8) { new_credit_string += "0"; }
     // combine the user info
     String combined_user = username + type + credit_string;
     // check if user is in users.ua, if they are, add (addCredit)
-    if (checkUserIntegrity(username) == false) {
+    if (checkUserIntegrity(username) == true) {
       System.out.println("Adding " + credit_string + " to user: " + username);
       // remove from the list
       userList.remove(index);
 
       // add back the user with credit added
       combined_user = username + type + new_credit_string;
-      userList.add(combined_user);
+      userList.add(index, combined_user);
     }
     return userList;
   }
