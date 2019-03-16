@@ -26,7 +26,7 @@ public class Main {
 			// System.out.println(handlerObj.verifyUserFileFormat());
 			// System.out.println(handlerObj.verifyTicketsFileFormat());
 			// System.out.println(handlerObj.verifyTransFileFormat());
-			// handlerObj.storeTicketLineInformation();
+//			 handlerObj.storeTicketLineInformation();
 			// handlerObj.storeUserLineInformation();
 			// Reading the daily trans to do the transactions
 			handlerObj.transList = handlerObj.readFile(TRANS_FILE);
@@ -82,6 +82,8 @@ public class Main {
 					}
 				}
 			}
+			handlerObj.WriteTicketsFile();
+			handlerObj.WriteUsersFile();
 
 		} catch (IOException e) {
 			System.err.println("An IOException was caught :" + e.getMessage());

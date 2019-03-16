@@ -53,14 +53,60 @@ public class FileHandler {
 		List<String> userList = new ArrayList<String>();
 		return userList;
 	}
+	public boolean WriteUserFile()
+	{
+		return false;
 
+	}
+	public boolean WriteTicketsFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
+	{
+		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/stock.at"), "utf-8")))
+		{
+			for (String line : this.ticketList) {
+				if (line != null)
+				{
+					fileWriter.write(line + "\n");
+				}
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return false;
+		}
+
+		return true;
+
+	}
+	public boolean WriteUsersFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
+	{
+		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/users.ua"), "utf-8")))
+		{
+			for (String line : this.userList) {
+				if (line != null)
+				{
+					fileWriter.write(line + "\n");
+				}
+
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return false;
+		}
+
+		return true;
+
+	}
 	public void initializeFiles(String userFile, String ticketsFile, String transFile) throws IOException
 	{
-	  userList = readFile(userFile);
+		userList = readFile(userFile);
 		ticketList = readFile(ticketsFile);
 		transList = readFile(transFile);
 	}
-	
+
 	// I ended up doing this in AccountManager
 	// public void storeUserLineInformation()
 	// {
