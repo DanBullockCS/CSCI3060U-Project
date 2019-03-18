@@ -125,6 +125,8 @@ public class TicketManager {
   * @return: The List<String> ...
   */
   public List<String> buy(List<String> ticketList, String trans_line, List<String> transList, List<String> userList) {
+		//Formatting for users credit
+		//String format = "%6.2"; //6 digits 2 behind decimal
 
 		//Current ticketList line information
 		String eventName = "";
@@ -222,8 +224,9 @@ public class TicketManager {
 		String new_amountOfTickets = String.valueOf(remainingTickets);
 		String string_ticketPrice = String.valueOf(ticketPrice);
 
+
 		//Add padding to amountOfTickets
-		while(new_amountOfTickets.length() <= 3){
+		while(new_amountOfTickets.length() < 3){
 			new_amountOfTickets = "0" + new_amountOfTickets;
 		}
 		if (new_sellers_credit > 999999.99){
@@ -234,32 +237,24 @@ public class TicketManager {
 			return ticketList;
 		} else {
 			//Padding for seller
-			if(!string_new_sellers_credit.contains(".")){
-				string_new_sellers_credit += ".00";
+			if(string_new_sellers_credit.contains(".0")){
+				string_new_sellers_credit += "0";
 			}
-			while(string_new_sellers_credit.length() <= 9){
+			while(string_new_sellers_credit.length() < 9){
 				string_new_sellers_credit = "0" + string_new_sellers_credit;
 			}
 			//Padding for buyer
-			if(!string_new_buyers_credit.contains(".")){
-				string_new_buyers_credit += ".00";
+			if(string_new_buyers_credit.contains(".0")){
+				string_new_buyers_credit += "0";
 			}
-			while(string_new_sellers_credit.length() <= 9){
+			while(string_new_buyers_credit.length() < 9){
 				string_new_buyers_credit = "0" + string_new_buyers_credit;
-			}
-			//Padding for ticket price
-			if(!string_ticketPrice.contains(".")){
-				string_ticketPrice += ".00";
-			}
-			while(string_ticketPrice.length() <= 6){
-				string_ticketPrice = "0" + string_ticketPrice;
 			}
 		}
 		String updatedBuyer = buyerUsername + " " + buyerPrivelege + " " + string_new_buyers_credit;
 		String updatedSeller = sellersUsername + " " + sellerPrivelege + " " + string_new_sellers_credit;
-		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + new_amountOfTickets + " " + string_ticketPrice;
-		
-		
+		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + new_amountOfTickets + " " + trans_line.substring(49, 55);
+
 		//One last check to make sure buyer and seller are not the same
 		if (buyerUsername.equals(sellersUsername)){
 			System.out.println("Cannot buy from self, ending transaction.");
@@ -273,6 +268,7 @@ public class TicketManager {
 			userList.add(updatedSeller);
 			System.out.println("Transaction completed successfully!");
 		}
+		
     return ticketList;
   }
 
