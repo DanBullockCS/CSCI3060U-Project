@@ -19,45 +19,11 @@ public class FileHandler {
 
 	public String fileName;
 
-	public List<String> usernamesUserFileList = new ArrayList<String>();
-	public List<Double> creditsList = new ArrayList<>();
-	public List<String> typeList = new ArrayList<String>();
-
-	public List<String> usernamesTicketFileList = new ArrayList<String>();
-	public List<String> eventNameList = new ArrayList<String>();
-	public List<Integer> amountOfTicketsList = new ArrayList<>();
-	public List<Double> ticketPriceList = new ArrayList<>();
-
 	public List<String> userList = new ArrayList<String>();
 	public List<String> ticketList = new ArrayList<String>();
 	public List<String> transList = new ArrayList<String>();
 
-	/**
-	 * The Update tickets method updates the ticket values to reflect the previous
-	 * days transactions.
-	 *
-	 * @return returns a list of strings with the new ticket lines.
-	 */
-	public List<String> updateTickets() {
-		List<String> ticketList = new ArrayList<String>();
-		return ticketList;
-	}
-
-	/**
-	 * The Update users method updates the user values to reflect the previous days
-	 * transactions.
-	 *
-	 * @return
-	 */
-	public List<String> updateUsers() {
-		List<String> userList = new ArrayList<String>();
-		return userList;
-	}
-	public boolean WriteUserFile()
-	{
-		return false;
-
-	}
+	
 	public boolean WriteTicketsFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
 		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/stock.at"), "utf-8")))
@@ -107,37 +73,6 @@ public class FileHandler {
 		transList = readFile(transFile);
 	}
 
-	// I ended up doing this in AccountManager
-	// public void storeUserLineInformation()
-	// {
-	// 	for (String line : this.userList) {
-	// 		if (line != null)
-	// 		{
-	// 			usernamesTicketFileList.add(line.substring(0, 15).trim());
-	// 			typeList.add(line.substring(16, 18).trim());
-	// 			creditsList.add(Double.parseDouble(line.substring(19, 28).trim()));
-	// 		}
-	// 	}
-	// 	System.out.println(usernamesTicketFileList);
-	// 	System.out.println(typeList);
-	// 	System.out.println(creditsList);
-	// }
-	public void storeTicketLineInformation()
-	{
-		for (String line : this.ticketList) {
-			if (line != null)
-			{
-				eventNameList.add(line.substring(0, 26).trim());
-				usernamesUserFileList.add(line.substring(26, 42).trim());
-				amountOfTicketsList.add(Integer.parseInt(line.substring(42, 46).trim()));
-				ticketPriceList.add(Double.parseDouble(line.substring(46, 52).trim()));
-			}
-		}
-		System.out.println(eventNameList);
-		System.out.println(usernamesUserFileList);
-		System.out.println(amountOfTicketsList);
-		System.out.println(ticketPriceList);
-	}
 	/**
 	 * reads the file and stores the contents in a list of strings
 	 *
