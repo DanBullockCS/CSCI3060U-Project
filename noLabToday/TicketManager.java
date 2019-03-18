@@ -172,6 +172,7 @@ public class TicketManager {
 					if (eventName.equals(trans_line_eventName)){
 						trans_line_index = index;
 						System.out.println("Event found...");
+						eventFound = true;
 					}
 				}
 			}
@@ -199,7 +200,7 @@ public class TicketManager {
 						buyer_index = index; 
 						buyerPrivelege = userList.get(buyer_index).substring(16,18);
 					  buyerCredits = Double.parseDouble(userList.get(buyer_index).substring(19, 28));
-						
+						buyerFound = true;
 					}
 				}
 				if (sellerFound == false){
@@ -207,6 +208,7 @@ public class TicketManager {
 						seller_index = index; 
 						sellerPrivelege = userList.get(seller_index).substring(16,18);
 					  sellerCredits = Double.parseDouble(userList.get(seller_index).substring(19,28));
+						sellerFound = true;
 					}
 				}
 			}
@@ -278,7 +280,21 @@ public class TicketManager {
   * @param String trans_line - containing the current line from the daily trans file
   * @return: The List<String> ...
   */
-  public List<String> sell(List<String> ticketList, String trans_line) {
+  public List<String> sell(List<String> ticketList, String trans_line, List<String> userList) {
+		String new_event = trans_line.substring(3, 55);
+		String eventName = trans_line.substring(3, 28);
+		String sellersUsername = trans_line.substring(29, 44);
+
+		if (checkUserIntegrity(sellersUsername, userList)){
+			if (checkDuplicateEvent(ticketList, eventName) == false){
+				System.out.println("Unique event confirmed..");
+				System.out.println("Transaction completed succesfully");
+				ticketList.add(new_event);
+			} else {
+				System.out.println("ERROR: Duplicate event found!\nEnding transaction.");
+			}
+		}
+		
     return ticketList;
   }
 

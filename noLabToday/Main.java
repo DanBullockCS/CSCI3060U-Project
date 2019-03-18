@@ -58,9 +58,8 @@ public class Main {
 					} else if (transCode.trim().equals("03")) {
 						// Sell
 						System.out.println("\nStarting Sell:");
-						// TODO: Danooshan
-						//handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line, handlerObj.transList);
-						//System.out.println(handlerObj.ticketList);
+						handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line, handlerObj.userList);
+						System.out.println(handlerObj.ticketList);
 					} else if (transCode.trim().equals("04")) {
 						// Buy
 						System.out.println("\nStarting Buy:");
