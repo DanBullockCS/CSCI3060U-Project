@@ -32,7 +32,7 @@ public class TicketManager {
 			return false;
 		}
 	}
-	
+
 	 /**
   * Checks that the user that was being created has a unique username
   * @param String username - the user name of the current user
@@ -58,13 +58,13 @@ public class TicketManager {
    		return false;
 		} else if (count == 1){
 			// User does exit in users.ua
-			System.out.println("Unique user found in database.");	
+			System.out.println("Unique user found in database.");
 			return true;
 		} else {
 			// Users with the same name found
 			System.out.println("ERROR: Multiple users of same name found. Ending transaction.");
 			return false;
-		}    
+		}
   }
 
 	/**
@@ -80,11 +80,11 @@ public class TicketManager {
 			if (line != null){
 				if (line.substring(0, 25).equals(eventName)){
 
-					count += 1; 
+					count += 1;
 				}
 				if (count > 1){
 					return true;
-				}			
+				}
 			}
 		}
 		return false;
@@ -144,8 +144,8 @@ public class TicketManager {
 		//Buyer information
 		String buyerUsername = findBuyer(transList, trans_line);
 		String buyerPrivelege = "";
-		double buyerCredits = 0;	
-		
+		double buyerCredits = 0;
+
 		//index variables
 		int index = 0;
 		int trans_line_index = 0;
@@ -158,7 +158,7 @@ public class TicketManager {
 					sellersUsername = line.substring(26, 41);
 					amountOfTickets = Integer.parseInt(line.substring(42, 45));
 					ticketPrice = Double.parseDouble(line.substring(46, 52));
-				
+
 					//If a duplicate eventname is found, reading the transaction is cancelled.
 					if (checkDuplicateEvent(ticketList, eventName) == true){
 						System.out.println("ERROR: Duplicate Event found!\nEnding buy transaction.");
@@ -175,7 +175,7 @@ public class TicketManager {
 			index += 1;
 		}
 
-		
+
 		if (checkNegativeTickets(trans_line_amountOfTickets ,amountOfTickets) == true){
 			System.out.println("Sufficient tickets available for purchase...");
 		} else {
@@ -192,16 +192,16 @@ public class TicketManager {
     for (String line : userList) {
 			if (line != null) {
 				if (buyerFound == false){
-		      if (line.substring(0,15).equals(buyerUsername)){ 
-						buyer_index = index; 
+		      if (line.substring(0,15).equals(buyerUsername)){
+						buyer_index = index;
 						buyerPrivelege = userList.get(buyer_index).substring(16,18);
 					  buyerCredits = Double.parseDouble(userList.get(buyer_index).substring(19, 28));
 						buyerFound = true;
 					}
 				}
 				if (sellerFound == false){
-		      if (line.substring(0,15).equals(sellersUsername)){ 
-						seller_index = index; 
+		      if (line.substring(0,15).equals(sellersUsername)){
+						seller_index = index;
 						sellerPrivelege = userList.get(seller_index).substring(16,18);
 					  sellerCredits = Double.parseDouble(userList.get(seller_index).substring(19,28));
 						sellerFound = true;
@@ -210,7 +210,7 @@ public class TicketManager {
 			}
       index++;
     }
-   
+
 		//Now that constraints have been checked and index found, can begin updating the values
 
 		//New values to replace old ones.
@@ -256,7 +256,7 @@ public class TicketManager {
 		//One last check to make sure buyer and seller are not the same
 		if (buyerUsername.equals(sellersUsername)){
 			System.out.println("Cannot buy from self, ending transaction.");
-			return ticketList;	
+			return ticketList;
 		} else {
 			ticketList.remove(trans_line_index);
 			ticketList.add(updatedTicket);
@@ -266,13 +266,13 @@ public class TicketManager {
 			userList.add(updatedSeller);
 			System.out.println("Transaction completed successfully!");
 		}
-		
+
     return ticketList;
   }
 	/**
 	* Check if the user is selling 2 of the same tickets
 	* @param: List<String> ticketList - the list of tickets in the system
-	* @param: String sellerName - the name of the seller being searched for 
+	* @param: String sellerName - the name of the seller being searched for
 	* @param: String eventName - the name of the event being searched for
 	* @return: True if the seller is selling 2 of the same tickets
 						 False if the seller is not selling 2 of the same tickets
@@ -304,26 +304,26 @@ public class TicketManager {
 		String new_event = trans_line.substring(3, 55);
 		String eventName = trans_line.substring(3, 28);
 		String sellersUsername = trans_line.substring(29, 44);
-		
-		//Checks for duplicate user in the user file, and then checks for duplicate tickets for the same users 
+
+		//Checks for duplicate user in the user file, and then checks for duplicate tickets for the same users
 		if (checkUserIntegrity(sellersUsername, userList)){
 			if (checkDuplicateEvent(ticketList, eventName) == false){
 				System.out.println("Unique event confirmed..");
 				System.out.println("Transaction completed succesfully");
 				ticketList.add(new_event);
 			} else {
-				if (checkCorrectDuplicate(ticketList, sellersName, eventName) == true){
+				if (checkCorrectDuplicate(ticketList, sellersUsername, eventName) == true){
 					System.out.println("ERROR: Duplicate event found for the same user!\nEnding transaction.");
 				} else {
-					System.out.println("Unique event not duplicated for same user..")
+					System.out.println("Unique event not duplicated for same user..");
 					System.out.println("Transaction completed succesfully");
 					//Update the ticketList with the new sell event
-					ticketList.add(new_event)
-				}			
+					ticketList.add(new_event);
+				}
 
 			}
 		}
-		
+
     return ticketList;
   }
 
