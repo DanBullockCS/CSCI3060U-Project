@@ -13,17 +13,13 @@ import java.util.ArrayList;
 */
 
 public class TicketManager {
-  /*public FileHandler filehandler = new FileHandler(); // FileHandler class
-  public String eventName; //Title of the event on the ticket
-  public double price; // Price of the ticket
-  public String seller; // Name of the user selling the ticket
-  public int numTickets; // Number of tickets remaining*/
 
 	/**
-		This function is used to check the constraint of having negative tickets, and updates numTickets remaining for the specific event.
-		@param int ticketsPurchased - The number of tickets purchased
-		@return: True if: Tickets are greater or equal to zero
-					   False if: Tickets are less than zero
+	*	This function is used to check the constraint of having negative tickets, and updates numTickets remaining for the specific event.
+	*	@param int ticketsPurchased - The number of tickets purchased
+	*	@param int totalTickets - the total number of tickets available
+	*	@return: True if: Tickets are greater or equal to zero
+	*				   False if: Tickets are less than zero
 	*/
   public boolean checkNegativeTickets(int ticketsPurchased, int totalTickets) {
 		int remainingTickets = totalTickets - ticketsPurchased;
@@ -40,6 +36,7 @@ public class TicketManager {
 	 /**
   * Checks that the user that was being created has a unique username
   * @param String username - the user name of the current user
+	*	@param: List<String> userList - the list of users in the system
   * @return: True if: User to be created does exist in database
   *          False if: User to be created does NOT exists in database or if User is not unique
   */
@@ -57,7 +54,7 @@ public class TicketManager {
     }
 		if (count == 0){
 			// User does not exist in users.ua
-   		System.out.println("User is not in database. Ending transaction.");
+   		System.out.println("ERROR: User is not in database. Ending transaction.");
    		return false;
 		} else if (count == 1){
 			// User does exit in users.ua
@@ -65,16 +62,17 @@ public class TicketManager {
 			return true;
 		} else {
 			// Users with the same name found
-			System.out.println("Multiple users of same name found. Ending transaction.");
+			System.out.println("ERROR: Multiple users of same name found. Ending transaction.");
 			return false;
 		}    
   }
 
 	/**
 	* This function is used to check the constraint of having duplicate events.
-	* @param: nothing
+	* @param: List<String> ticketList - a list of all the tickets available
+	*	@param:	String eventName - the name of the event being searched for
 	* @return: true: if a duplicate event is found.
-						 false: if no duplicate event is found.
+	*					 false: if no duplicate event is found.
 	*/
   public boolean checkDuplicateEvent(List<String> ticketList, String eventName) {
 		int count = 0;
@@ -117,17 +115,15 @@ public class TicketManager {
 		return name;
 	}
 
-  /** TODO Danooshan
+  /**
   * do buy transaction in ticketList
   * @param List<String> ticketList - a list of all the tickets in the system
   * @param String trans_line - containing the current line from the daily trans file
 	* @param List<String> transList - a list of all the transactions in the system
-  * @return: The List<String> ...
+	* @param List<String> userList - a list of all the users in the system
+  * @return: The updated ticket lists
   */
   public List<String> buy(List<String> ticketList, String trans_line, List<String> transList, List<String> userList) {
-		//Formatting for users credit
-		//String format = "%6.2"; //6 digits 2 behind decimal
-
 		//Current ticketList line information
 		String eventName = "";
 		String sellersUsername = "";
@@ -239,7 +235,7 @@ public class TicketManager {
 			return ticketList;
 		} else {
 			//Padding for seller
-			if(string_new_sellers_credit.contains(".0")){
+			if(string_new_sellers_credit.length() <= 8 && string_new_sellers_credit.contains(".")){
 				string_new_sellers_credit += "0";
 			}
 			while(string_new_sellers_credit.length() < 9){
@@ -273,25 +269,58 @@ public class TicketManager {
 		
     return ticketList;
   }
+	/**
+	* Check if the user is selling 2 of the same tickets
+	* @param: List<String> ticketList - the list of tickets in the system
+	* @param: String sellerName - the name of the seller being searched for 
+	* @param: String eventName - the name of the event being searched for
+	* @return: True if the seller is selling 2 of the same tickets
+						 False if the seller is not selling 2 of the same tickets
+	*/
+	public boolean checkCorrectDuplicate(List<String> ticketList, String sellerName, String eventName){
+		int count = 0;
+		for (String line : ticketList){
+			if( line != null){
+				if(line.substring(0, 25) == eventName){
+					if(line.substring(26, 41) == sellerName){
+						count += 1;
+					}
+				}
+			}
+			if(count > 1){
+				return true;
+			}
+		}
+		return false;
+	}
 
-  /** TODO Danooshan
+  /**
   * do sell transaction in ticketList
   * @param List<String> ticketList - a list of all the tickets in the system
   * @param String trans_line - containing the current line from the daily trans file
-  * @return: The List<String> ...
+  * @return: The updated list of tickets
   */
   public List<String> sell(List<String> ticketList, String trans_line, List<String> userList) {
 		String new_event = trans_line.substring(3, 55);
 		String eventName = trans_line.substring(3, 28);
 		String sellersUsername = trans_line.substring(29, 44);
-
+		
+		//Checks for duplicate user in the user file, and then checks for duplicate tickets for the same users 
 		if (checkUserIntegrity(sellersUsername, userList)){
 			if (checkDuplicateEvent(ticketList, eventName) == false){
 				System.out.println("Unique event confirmed..");
 				System.out.println("Transaction completed succesfully");
 				ticketList.add(new_event);
 			} else {
-				System.out.println("ERROR: Duplicate event found!\nEnding transaction.");
+				if (checkCorrectDuplicate(ticketList, sellersName, eventName) == true){
+					System.out.println("ERROR: Duplicate event found for the same user!\nEnding transaction.");
+				} else {
+					System.out.println("Unique event not duplicated for same user..")
+					System.out.println("Transaction completed succesfully");
+					//Update the ticketList with the new sell event
+					ticketList.add(new_event)
+				}			
+
 			}
 		}
 		
