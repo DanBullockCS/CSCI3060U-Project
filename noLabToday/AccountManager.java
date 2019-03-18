@@ -37,8 +37,8 @@ public class AccountManager extends Main {
     }
 
     // check if username is already in users.ua
-    for (String s: account_file) {
-      if (s.contains(username)) {
+    for (String line: account_file) {
+      if (line.substring(0, 15).trim().equals(username.trim())) {
         System.out.println("User exists in the database.");
   			return true;
       }
@@ -86,7 +86,7 @@ public class AccountManager extends Main {
     // get userinfo in userList
     for (String line : userList) {
 			if (line != null) {
-        if (line.contains(username)) {
+        if (line.substring(0, 15).trim().equals(username.trim())) {
           deletion_index = i;
         }
         i++;
@@ -124,8 +124,8 @@ public class AccountManager extends Main {
     int i = 0, buyer_index = 0, seller_index = 0;
     for (String line : userList) {
 			if (line != null) {
-        if (line.contains(username)) { buyer_index = i; }
-        if (line.contains(seller_username)) { seller_index = i; }
+        if (line.substring(0, 15).trim().equals(username.trim())) { buyer_index = i; }
+        if (line.substring(0, 15).trim().equals(seller_username.trim())) { seller_index = i; }
         i++;
       }
     }
@@ -189,7 +189,7 @@ public class AccountManager extends Main {
     int i = 0, index = 0;
     for (String line : userList) {
 			if (line != null) {
-        if (line.contains(username)) { index = i; }
+        if (line.substring(0, 15).trim().equals(username.trim())) { index = i; }
         i++;
       }
     }

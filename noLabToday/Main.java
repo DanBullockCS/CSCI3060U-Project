@@ -44,7 +44,7 @@ public class Main {
 				if (line != null) {
 					transCode = line.substring(0, 2);
 					if (transCode.trim().equals("00")) {
-						// Save buyer for TicketManager class
+						System.out.println("Logout occurred on this line");
 					} else if (transCode.trim().equals("01")) {
 						// Create
 						System.out.println("\nStarting Create:");
