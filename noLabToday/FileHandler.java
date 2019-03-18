@@ -23,7 +23,7 @@ public class FileHandler {
 	public List<String> ticketList = new ArrayList<String>();
 	public List<String> transList = new ArrayList<String>();
 
-	
+
 	public boolean WriteTicketsFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
 		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/stock.at"), "utf-8")))

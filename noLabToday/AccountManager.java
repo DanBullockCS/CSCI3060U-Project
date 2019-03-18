@@ -1,4 +1,5 @@
 package noLabToday;
+
 import java.io.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,9 +31,7 @@ public class AccountManager extends Main {
     List<String> account_file = new ArrayList<String>();
     try {
       account_file = filehandler.readFile(USER_FILE);
-    }
-    catch (IOException e)
-    {
+    } catch (IOException e) {
       System.err.println("ERROR: An IOException was caught :"+ e.getMessage());
     }
 
