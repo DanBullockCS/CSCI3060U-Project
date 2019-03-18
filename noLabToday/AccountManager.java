@@ -15,8 +15,6 @@ import java.util.ArrayList;
 
 // get filenames from main
 public class AccountManager extends Main {
-
-  public FileHandler filehandler = new FileHandler(); // FileHandler class
   public String username; // user name of current user
   public String type;     // account type of that user (AA, FS, BS, SS)
   public double credit;   // the amount of credit in that users account
@@ -27,16 +25,9 @@ public class AccountManager extends Main {
   * @return: True if: User to be created does exist in database
   *          False if: User to be created does NOT exists in database
   */
-  public boolean checkUserIntegrity(String username) {
-    List<String> account_file = new ArrayList<String>();
-    try {
-      account_file = filehandler.readFile(USER_FILE);
-    } catch (IOException e) {
-      System.err.println("ERROR: An IOException was caught :"+ e.getMessage());
-    }
-
+  public boolean checkUserIntegrity(List<String> userList, String username) {
     // check if username is already in users.ua
-    for (String line: account_file) {
+    for (String line: userList) {
       if (line.substring(0, 15).trim().equals(username.trim())) {
         System.out.println("User exists in the database.");
   			return true;
@@ -63,7 +54,7 @@ public class AccountManager extends Main {
     String combined_user = username + type + credit_string;
 
     // check if user is in users.ua, if not, add (create)
-    if (checkUserIntegrity(username) == false) {
+    if (checkUserIntegrity(userList, username) == false) {
       System.out.println("Creating user: " + username);
       userList.add(combined_user);
     }
@@ -93,11 +84,10 @@ public class AccountManager extends Main {
 		}
 
     // check if user is in users.ua, if it is, remove (delete)
-    if (checkUserIntegrity(username) == true) {
+    if (checkUserIntegrity(userList, username) == true) {
       System.out.println("Deleting user: " + username);
       userList.remove(userList.get(deletion_index));
     }
-
     return userList;
   }
 
@@ -153,20 +143,20 @@ public class AccountManager extends Main {
     String combined_sell_user = seller_username + seller_type + new_seller_credit_str;
 
     // if buyer and seller are in users file
-    if (checkUserIntegrity(username) == true && checkUserIntegrity(seller_username) == true) {
+    if (checkUserIntegrity(userList, username) == true && checkUserIntegrity(userList, seller_username) == true) {
       System.out.println("Adding " + credit_string + " to user: " + username);
       // check that user is not refunding to themself
-      if (username != seller_username) {
-        // remove the old versions of the buyer from the list
+      if (!username.equals(seller_username)) {
+        // remove the old versions of the buyer/seller from the list and add the new ones
         userList.remove(buyer_index);
         userList.add(buyer_index, combined_buy_user);
         userList.remove(seller_index);
         userList.add(seller_index, combined_sell_user);
-      // admin user is refunding to themself
       } else {
-        userList.remove(seller_index);
-        userList.add(seller_index, combined_sell_user);
+        System.out.println("ERROR: You cannot refund yourself");
       }
+    } else {
+      System.out.println("ERROR: One of the users is not in the system");
     }
     return userList;
   }
@@ -200,16 +190,17 @@ public class AccountManager extends Main {
     // if only one decimal place in string add another "0"
     if (new_credit_string.length() == 8) { new_credit_string += "0"; }
     // combine the user info
-    String combined_user = username + type + credit_string;
+    String combined_user = username + type + new_credit_string;
     // check if user is in users.ua, if they are, add (addCredit)
-    if (checkUserIntegrity(username) == true) {
+    if (checkUserIntegrity(userList, username) == true) {
       System.out.println("Adding " + credit_string + " to user: " + username);
       // remove from the list
       userList.remove(index);
 
       // add back the user with credit added
-      combined_user = username + type + new_credit_string;
       userList.add(index, combined_user);
+    } else {
+      System.out.println("User to addcredit to does not exist in database");
     }
     return userList;
   }
