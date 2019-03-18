@@ -64,9 +64,9 @@ public class Main {
 					} else if (transCode.trim().equals("04")) {
 						// Buy
 						System.out.println("\nStarting Buy:");
-						// TODO: Danooshan
-						handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line, handlerObj.transList);
+						handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line, handlerObj.transList, handlerObj.userList);
 						System.out.println(handlerObj.ticketList);
+						System.out.println(handlerObj.userList);
 					} else if (transCode.trim().equals("05")) {
 						// Refund
 						System.out.println("\nStarting Refund:");
