@@ -288,7 +288,7 @@ public class TicketManager {
 					}
 				}
 			}
-			if(count > 1){
+			if(count > 0){
 				return true;
 			}
 		}
@@ -308,20 +308,15 @@ public class TicketManager {
 
 		//Checks for duplicate user in the user file, and then checks for duplicate tickets for the same users
 		if (checkUserIntegrity(sellersUsername, userList)){
-			if (checkDuplicateEvent(ticketList, eventName) == false){
-				System.out.println("Unique event confirmed..");
-				System.out.println("Transaction completed succesfully");
-				ticketList.add(new_event);
+			//Check for already existing events from the same user
+			if (checkCorrectDuplicate(ticketList, sellersUsername, eventName) == true){
+				System.out.println("ERROR: You've already made that event!!\nEnding transaction.");
+				return ticketList;
 			} else {
-				if (checkCorrectDuplicate(ticketList, sellersUsername, eventName) == true){
-					System.out.println("ERROR: Duplicate event found for the same user!\nEnding transaction.");
-				} else {
-					System.out.println("Unique event not duplicated for same user..");
-					System.out.println("Transaction completed succesfully");
-					//Update the ticketList with the new sell event
-					ticketList.add(new_event);
-				}
-
+				System.out.println("Unique event not duplicated for same user..");
+				System.out.println("Transaction completed succesfully");
+				//Update the ticketList with the new sell event
+				ticketList.add(new_event);
 			}
 		}
 

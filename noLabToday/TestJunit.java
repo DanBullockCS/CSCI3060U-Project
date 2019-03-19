@@ -9,9 +9,6 @@ import noLabToday.FileHandler;
 import java.io.*;
 
 public class TestJunit {
-   /*
-   TODO -> Matt
-   */
    // FileHandler Tests:
    @Test
    // Testing the WriteTicketsFile()
@@ -222,49 +219,218 @@ public class TestJunit {
    }
 
 
-   /*
-   TODO -> Danooshan
-   */
+  
    // TicketManager Tests:
    @Test
    // Testing the checkNegativeTickets() method
    public void TicketTest1() {
-     System.out.println("\nTicketTest1:\n-----------------------------------");
+		 System.out.println("\nTicketTest1:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 int ticketsPurchased = 10; //First assertion value
+		 int ticketsPurchased2 = 1000; //Second assertion value
+	   int totalTickets = 100;
+		
+			//Case of sufficient tickets
+		 assertEquals(true, tickmanager.checkNegativeTickets(ticketsPurchased, totalTickets));
+			//Case of insufficient tickets
+		 assertEquals(false, tickmanager.checkNegativeTickets(ticketsPurchased2, totalTickets));
    }
 
    @Test
-   // Testing the checkUserIntegrity() method
+   // Testing the checkUserIntegrity(username, userList) method
    public void TicketTest2() {
      System.out.println("\nTicketTest2:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 String username = "user01         ";
+			//First assertion list
+		 ArrayList<String> userList = new ArrayList<>(Arrays.asList(
+                                                  "user06          AA 002323.00"));
+			//Second assertion list
+		 ArrayList<String> userList2 = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 000230.00",
+                                                  "user06          AA 002323.00"));
+			//Third assertion list
+		 ArrayList<String> userList3 = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 000230.00",
+																									"user01          AA 000235.00",
+                                                  "user06          AA 002323.00"));
+			//Case of no user found
+		 assertEquals(false, tickmanager.checkUserIntegrity(username, userList));
+			//Case of user found
+		 assertEquals(true, tickmanager.checkUserIntegrity(username, userList2));
+			//Case of duplicate user found
+		 assertEquals(false, tickmanager.checkUserIntegrity(username, userList3));
+		 										
    }
 
    @Test
    // Testing the checkDuplicateEvent() method
    public void TicketTest3() {
      System.out.println("\nTicketTest3:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 String eventName = "airpods meetup           ";
+			//First assertion list
+		 ArrayList<String> ticketList1 = new ArrayList<>(Arrays.asList(
+																										"run real fast event       user01          100 015.00",
+																										"airpods meetup            user01          003 100.00"));
+			//Second assertion list
+		 ArrayList<String> ticketList2 = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user01          003 100.00"));
+
+		
+
+			//Case of duplicate event
+		 assertEquals(true, tickmanager.checkDuplicateEvent(ticketList2, eventName));
+			//Case of unique event
+		 assertEquals(false, tickmanager.checkDuplicateEvent(ticketList1, eventName));
    }
 
    @Test
    // Testing the findBuyer() method
    public void TicketTest4() {
      System.out.println("\nTicketTest4:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 String trans_line = "04 airpods meetup            user01          023 100.00";
+		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(	
+																												"01 user06          AA 002323.00",
+																												"02 UserCreditMax   FS 000000.00",
+																												"05 user02          user01          000050.00",
+																												"06 user01          AA 000080.00",
+																												"00 user01          AA 000100.00",
+																												"03 run real fast event       user01          100 015.00",
+																												"00 user01          AA 000100.00",
+																												"04 airpods meetup            user01          023 100.00",
+																												"00 user02          FS 000075.00"));
+		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(	
+																												"01 user06          AA 002323.00",
+																												"02 UserCreditMax   FS 000000.00",
+																												"05 user02          user01          000050.00",
+																												"06 user01          AA 000080.00",
+																												"00 user01          AA 000100.00",
+																												"03 run real fast event       user01          100 015.00",
+																												"00 user01          AA 000100.00",
+																												"04 airpods meetup            user01          023 100.00"));
+			//Case of buyer existing
+		 assertEquals("user02         ", tickmanager.findBuyer(transactionList, trans_line));
+			//Case of buyer not found NOTE: this test can only occur if by some chance the logout transaction is not printed at 
+			//end of the session in which the buy is transacted
+		 assertEquals("", tickmanager.findBuyer(transactionList2, trans_line));
    }
 
    @Test
    // Testing the buy() method
    public void TicketTest5() {
      System.out.println("\nTicketTest5:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+				//Transaction cases
+		 String trans_line = "04 airpods meetup            user01          023 100.00";
+		 String trans_line2 = "04 airpods meetup            user02          023 100.00";
+				//Transaction list cases
+		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(	
+																												"04 airpods meetup            user01          023 100.00",
+																												"00 user02          FS 000075.00"));
+		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(	
+																												"04 airpods meetup            user01          500 100.00",
+																												"00 user02          FS 000075.00"));
+		 ArrayList<String> transactionList3 = new ArrayList<>(Arrays.asList(	
+																												"04 airpods meetup            user02          500 100.00",
+																												"00 user02          FS 000075.00"));
+		 ArrayList<String> ticketList = new ArrayList<>(Arrays.asList(
+																										"run real fast event       user01          100 015.00",
+																										"airpods meetup            user01          300 100.00"));
+		 ArrayList<String> ticketList2 = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user01          300 100.00"));
+		 ArrayList<String> ticketList3 = new ArrayList<>(Arrays.asList(
+																										"run real fast event       user01          100 015.00",
+																										"airpods meetup            user02          300 100.00"));
+			//User list cases
+		 ArrayList<String> userList = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 000230.00",
+                                                  "user02          AA 002323.00"));
+		 ArrayList<String> userList2 = new ArrayList<>(Arrays.asList(
+                                                  "user02          AA 000230.00",
+                                                  "user02          AA 002323.00"));
+		 ArrayList<String> userList3 = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 999999.00",
+                                                  "user02          AA 002323.00"));
+		 ArrayList<String> userList4 = new ArrayList<>(Arrays.asList(
+                                                  "user02          AA 000230.00",
+                                                  "user02          AA 000001.00"));
+		 ArrayList<String> expectedTicketList = new ArrayList<>(Arrays.asList(
+																										"run real fast event       user01          100 015.00",
+																										"airpods meetup            user01          277 100.00"));
+		//Case of successfull transaction
+		assertEquals(expectedTicketList, tickmanager.buy(ticketList, trans_line, transactionList, userList));
+		//Unsuccesfful cases:
+		//	1)	Case of duplicate event
+		assertEquals(ticketList2, tickmanager.buy(ticketList2, trans_line, transactionList, userList));
+		// 	2)	Case of insufficient tickets
+		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList2, userList));
+		//	3)	Case of invalid user, or duplicate user
+		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList, userList2));
+		//	4)	Case of seller reaching maximum credit
+		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList, userList3));
+		//	5)	Case of buyer having insufficient credits
+		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList, userList4));
+		//	6)	Case of buyer is seller
+		assertEquals(ticketList3, tickmanager.buy(ticketList3, trans_line2, transactionList3, userList));
+
    }
 
    @Test
    // Testing the checkCorrectDuplicate() method
    public void TicketTest6() {
      System.out.println("\nTicketTest6:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 String eventName = "airpods meetup           ";
+		 String userName = "user01         ";
+			//Ticket List cases
+		 ArrayList<String> ticketList = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user02          003 100.00"));
+		 ArrayList<String> ticketList2 = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user01          003 100.00"));
+			//Case of duplicate events with the same seller
+		 assertEquals(true, tickmanager.checkCorrectDuplicate(ticketList2, userName, eventName));
+			//Successful case
+		 assertEquals(false, tickmanager.checkCorrectDuplicate(ticketList, userName, eventName));
    }
 
    @Test
    // Testing the sell() method
    public void TicketTest7() {
      System.out.println("\nTicketTest7:\n-----------------------------------");
+		 TicketManager tickmanager = new TicketManager();
+		 String trans_line = "03 run real fast event       user01          100 015.00";
+
+		 ArrayList<String> userList1 = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 000230.00",
+                                                  "user02          AA 002323.00"));
+
+		 ArrayList<String> userList2 = new ArrayList<>(Arrays.asList(
+                                                  "user01          AA 000230.00",
+                                                  "user01          AA 002323.00"));
+
+		 //Ticket List cases
+		 ArrayList<String> ticketList = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user02          003 100.00"));
+		 ArrayList<String> ticketList2 = new ArrayList<>(Arrays.asList(
+																										"run real fast event       user01          100 015.00",
+																										"airpods meetup            user01          003 100.00"));
+		 ArrayList<String> expectedTicketList = new ArrayList<>(Arrays.asList(
+																										"airpods meetup            user01          100 015.00",
+																										"airpods meetup            user02          003 100.00",
+																										"run real fast event       user01          100 015.00"));
+			//Successful case
+		 assertEquals(expectedTicketList, tickmanager.sell(ticketList, trans_line, userList1));
+			//Unsuccessful cases:
+			//	1)	Duplicate users
+		 assertEquals(ticketList, tickmanager.sell(ticketList, trans_line, userList2));
+			//	2)	Creating an event the seller has already created
+		 assertEquals(ticketList2, tickmanager.sell(ticketList2, trans_line, userList1));
    }
 }
