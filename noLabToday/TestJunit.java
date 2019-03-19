@@ -388,7 +388,7 @@ public class TestJunit {
 		 String userName = "user01         ";
 			//Ticket List cases
 		 ArrayList<String> ticketList = new ArrayList<>(Arrays.asList(
-																										"airpods meetup            user01          100 015.00",
+																										"cooleventforme            user01          100 015.00",
 																										"airpods meetup            user02          003 100.00"));
 		 ArrayList<String> ticketList2 = new ArrayList<>(Arrays.asList(
 																										"airpods meetup            user01          100 015.00",
