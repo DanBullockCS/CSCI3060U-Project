@@ -135,7 +135,7 @@ public class AccountManager extends Main {
       if (new_seller_credit_str.length() == 8) { new_seller_credit_str += "0"; }
     } else {
       System.out.println("ERROR: Credit cannot be refunded fully since seller does not have enough credit");
-      new_seller_credit_str = "000000.00";
+      return userList;
     }
 
     // combine the user info
@@ -182,9 +182,9 @@ public class AccountManager extends Main {
         i++;
       }
     }
-
-    // the credit string of the user getting credit added to them
+    System.out.println(userList);
     Double new_credit = Double.parseDouble(userList.get(index).substring(19, 28).trim()) + credit;
+    // the credit string of the user getting credit added to them
     // add the leading zeros to the string
     String new_credit_string = ("00000000" + String.valueOf(new_credit)).substring(String.valueOf(new_credit).length());
     // if only one decimal place in string add another "0"

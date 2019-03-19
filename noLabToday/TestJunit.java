@@ -9,12 +9,19 @@ import noLabToday.FileHandler;
 import java.io.*;
 
 public class TestJunit {
+   // Main method test
+   @Test
+   public void MainTest() {
+     System.out.println("\nMainTest:\n-----------------------------------");
+     Main main = new Main();
+   }
+   
    // FileHandler Tests:
    @Test
    // Testing the WriteTicketsFile()
    public void FileTest1() {
      System.out.println("\nFileTest1:\n-----------------------------------");
-     
+
      try
      {
     	 FileHandler handlerObj = new FileHandler();
@@ -43,7 +50,7 @@ public class TestJunit {
 	{
 		System.out.println(e.getMessage());
 	}
-     
+
 
    }
 
@@ -54,7 +61,7 @@ public class TestJunit {
      try
      {
     	 FileHandler handlerObj = new FileHandler();
-         
+
          assertNotNull(handlerObj.readFile("./files/stock.at"));
          assertNotNull(handlerObj.readFile("./files/trans.out"));
          assertNotNull(handlerObj.readFile("./files/users.ua"));
@@ -65,14 +72,14 @@ public class TestJunit {
 	{
 		System.out.println(e.getMessage());
 	}
-    
+
    }
 
    @Test
    // Testing the verifyUserFileFormat() method
    public void FileTest5() {
      System.out.println("\nFileTest5:\n-----------------------------------");
-     
+
      try
      {
     	 FileHandler handlerObj = new FileHandler();
@@ -90,7 +97,7 @@ public class TestJunit {
    // Testing the verifyTicketsFileFormat() method
    public void FileTest6() {
      System.out.println("\nFileTest6:\n-----------------------------------");
-    
+
      try
      {
     	 FileHandler handlerObj = new FileHandler();
@@ -108,7 +115,7 @@ public class TestJunit {
    // Testing the verifyTransFileFormat() method
    public void FileTest7() {
      System.out.println("\nFileTest7:\n-----------------------------------");
-     
+
      try
      {
     	 FileHandler handlerObj = new FileHandler();
@@ -219,7 +226,7 @@ public class TestJunit {
    }
 
 
-  
+
    // TicketManager Tests:
    @Test
    // Testing the checkNegativeTickets() method
@@ -229,7 +236,7 @@ public class TestJunit {
 		 int ticketsPurchased = 10; //First assertion value
 		 int ticketsPurchased2 = 1000; //Second assertion value
 	   int totalTickets = 100;
-		
+
 			//Case of sufficient tickets
 		 assertEquals(true, tickmanager.checkNegativeTickets(ticketsPurchased, totalTickets));
 			//Case of insufficient tickets
@@ -260,7 +267,7 @@ public class TestJunit {
 		 assertEquals(true, tickmanager.checkUserIntegrity(username, userList2));
 			//Case of duplicate user found
 		 assertEquals(false, tickmanager.checkUserIntegrity(username, userList3));
-		 										
+
    }
 
    @Test
@@ -278,7 +285,7 @@ public class TestJunit {
 																										"airpods meetup            user01          100 015.00",
 																										"airpods meetup            user01          003 100.00"));
 
-		
+
 
 			//Case of duplicate event
 		 assertEquals(true, tickmanager.checkDuplicateEvent(ticketList2, eventName));
@@ -292,7 +299,7 @@ public class TestJunit {
      System.out.println("\nTicketTest4:\n-----------------------------------");
 		 TicketManager tickmanager = new TicketManager();
 		 String trans_line = "04 airpods meetup            user01          023 100.00";
-		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(	
+		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(
 																												"01 user06          AA 002323.00",
 																												"02 UserCreditMax   FS 000000.00",
 																												"05 user02          user01          000050.00",
@@ -302,7 +309,7 @@ public class TestJunit {
 																												"00 user01          AA 000100.00",
 																												"04 airpods meetup            user01          023 100.00",
 																												"00 user02          FS 000075.00"));
-		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(	
+		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(
 																												"01 user06          AA 002323.00",
 																												"02 UserCreditMax   FS 000000.00",
 																												"05 user02          user01          000050.00",
@@ -313,7 +320,7 @@ public class TestJunit {
 																												"04 airpods meetup            user01          023 100.00"));
 			//Case of buyer existing
 		 assertEquals("user02         ", tickmanager.findBuyer(transactionList, trans_line));
-			//Case of buyer not found NOTE: this test can only occur if by some chance the logout transaction is not printed at 
+			//Case of buyer not found NOTE: this test can only occur if by some chance the logout transaction is not printed at
 			//end of the session in which the buy is transacted
 		 assertEquals("", tickmanager.findBuyer(transactionList2, trans_line));
    }
@@ -327,13 +334,13 @@ public class TestJunit {
 		 String trans_line = "04 airpods meetup            user01          023 100.00";
 		 String trans_line2 = "04 airpods meetup            user02          023 100.00";
 				//Transaction list cases
-		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(	
+		 ArrayList<String> transactionList = new ArrayList<>(Arrays.asList(
 																												"04 airpods meetup            user01          023 100.00",
 																												"00 user02          FS 000075.00"));
-		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(	
+		 ArrayList<String> transactionList2 = new ArrayList<>(Arrays.asList(
 																												"04 airpods meetup            user01          500 100.00",
 																												"00 user02          FS 000075.00"));
-		 ArrayList<String> transactionList3 = new ArrayList<>(Arrays.asList(	
+		 ArrayList<String> transactionList3 = new ArrayList<>(Arrays.asList(
 																												"04 airpods meetup            user02          500 100.00",
 																												"00 user02          FS 000075.00"));
 		 ArrayList<String> ticketList = new ArrayList<>(Arrays.asList(

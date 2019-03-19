@@ -23,64 +23,62 @@ public class Main {
 
 		try {
 			handlerObj.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-			// System.out.println(handlerObj.verifyUserFileFormat());
-			// System.out.println(handlerObj.verifyTicketsFileFormat());
-			// System.out.println(handlerObj.verifyTransFileFormat());
-			// Reading the daily trans to do the transactions
-			handlerObj.transList = handlerObj.readFile(TRANS_FILE);
-			AccountManager acctManager = new AccountManager();
-			TicketManager tickManager = new TicketManager();
-			String transCode = "";
+			// verifying the format of each file
+			if (handlerObj.verifyTransFileFormat() == true &&
+			 		handlerObj.verifyUserFileFormat() == true &&
+			  	handlerObj.verifyTicketsFileFormat() == true) {
+				// Reading the daily trans to do the transactions
+				handlerObj.transList = handlerObj.readFile(TRANS_FILE);
 
-			try {
-				handlerObj.initializeFiles(USER_FILE, STOCK_FILE, TRANS_FILE);
-			} catch (IOException e) {
-				System.err.println("An IOException was caught :" + e.getMessage());
-			}
+				AccountManager acctManager = new AccountManager();
+				TicketManager tickManager = new TicketManager();
+				String transCode = "";
 
-			for (String line : handlerObj.transList) {
-				if (line != null) {
-					transCode = line.substring(0, 2);
-					if (transCode.trim().equals("00")) {
-						System.out.println("Logout occurred on this line");
-					} else if (transCode.trim().equals("01")) {
-						// Create
-						System.out.println("\nStarting Create:");
-						handlerObj.userList = acctManager.create(handlerObj.userList, line);
-						System.out.println(handlerObj.userList); // showing that create works
-					} else if (transCode.trim().equals("02")) {
-						// Delete
-						System.out.println("\nStarting Delete:");
-						handlerObj.userList = acctManager.delete(handlerObj.userList, line);
-						System.out.println(handlerObj.userList);
-					} else if (transCode.trim().equals("03")) {
-						// Sell
-						System.out.println("\nStarting Sell:");
-						handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line, handlerObj.userList);
-						System.out.println(handlerObj.ticketList);
-					} else if (transCode.trim().equals("04")) {
-						// Buy
-						System.out.println("\nStarting Buy:");
-						handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line, handlerObj.transList, handlerObj.userList);
-						System.out.println(handlerObj.ticketList);
-						System.out.println(handlerObj.userList);
-					} else if (transCode.trim().equals("05")) {
-						// Refund
-						System.out.println("\nStarting Refund:");
-						handlerObj.userList = acctManager.refund(handlerObj.userList, line);
-						System.out.println(handlerObj.userList);
-					} else if (transCode.trim().equals("06")) {
-						// addCredit
-						System.out.println("\nStarting addCredit:");
-						handlerObj.userList = acctManager.addCredit(handlerObj.userList, line);
-						System.out.println(handlerObj.userList);
-					} else {
-
+				for (String line : handlerObj.transList) {
+					if (line != null) {
+						transCode = line.substring(0, 2);
+						if (transCode.trim().equals("00")) {
+							System.out.println("Logout occurred on this line");
+						} else if (transCode.trim().equals("01")) {
+							// Create
+							System.out.println("\nStarting Create:");
+							handlerObj.userList = acctManager.create(handlerObj.userList, line);
+							System.out.println(handlerObj.userList);
+						} else if (transCode.trim().equals("02")) {
+							// Delete
+							System.out.println("\nStarting Delete:");
+							handlerObj.userList = acctManager.delete(handlerObj.userList, line);
+							System.out.println(handlerObj.userList);
+						} else if (transCode.trim().equals("03")) {
+							// Sell
+							System.out.println("\nStarting Sell:");
+							handlerObj.ticketList = tickManager.sell(handlerObj.ticketList, line, handlerObj.userList);
+							System.out.println(handlerObj.ticketList);
+						} else if (transCode.trim().equals("04")) {
+							// Buy
+							System.out.println("\nStarting Buy:");
+							handlerObj.ticketList = tickManager.buy(handlerObj.ticketList, line, handlerObj.transList, handlerObj.userList);
+							System.out.println(handlerObj.ticketList);
+							System.out.println(handlerObj.userList);
+						} else if (transCode.trim().equals("05")) {
+							// Refund
+							System.out.println("\nStarting Refund:");
+							handlerObj.userList = acctManager.refund(handlerObj.userList, line);
+							System.out.println(handlerObj.userList);
+						} else if (transCode.trim().equals("06")) {
+							// addCredit
+							System.out.println("\nStarting addCredit:");
+							handlerObj.userList = acctManager.addCredit(handlerObj.userList, line);
+							System.out.println(handlerObj.userList);
+						}
 					}
 				}
-			}
-			handlerObj.WriteTicketsFile();
-			handlerObj.WriteUsersFile();
+				// Write the changed lists to the file
+				handlerObj.WriteTicketsFile();
+				handlerObj.WriteUsersFile();
+		} else {
+			System.out.println("ERROR: Daily Trans File format is wrong");
+		}
 
 		} catch (IOException e) {
 			System.err.println("An IOException was caught :" + e.getMessage());

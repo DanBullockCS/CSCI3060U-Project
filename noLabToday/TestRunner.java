@@ -13,6 +13,6 @@ public class TestRunner {
     	 System.out.println(failure.toString());
     }
 
-    System.out.println("Test run successful: " + result.wasSuccessful());
+    System.out.println("\nTests Ran Successful = " + result.wasSuccessful());
   }
 }

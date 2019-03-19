@@ -28,8 +28,8 @@ public class FileHandler {
 	 * @return Boolean for file written to or not
 	 * @throws IOException when any issues with the i/o
 	 *                     occur
-	 * @throws FileNotFoundException when the file cannot be found 
-	 * @throws UnsupportedEncodingException when the file encoding is not supported 
+	 * @throws FileNotFoundException when the file cannot be found
+	 * @throws UnsupportedEncodingException when the file encoding is not supported
 	 *  */
 	public boolean WriteTicketsFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
@@ -57,8 +57,8 @@ public class FileHandler {
 	 * @return Boolean for file written to or not
 	 * @throws IOException when any issues with the i/o
 	 *                     occur
-	 * @throws FileNotFoundException when the file cannot be found 
-	 * @throws UnsupportedEncodingException when the file encoding is not supported 
+	 * @throws FileNotFoundException when the file cannot be found
+	 * @throws UnsupportedEncodingException when the file encoding is not supported
 	 *  */
 	public boolean WriteUsersFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
@@ -203,7 +203,7 @@ public class FileHandler {
 			if (line != null) {
 				transCode = line.substring(0, 2);
 				if (transCode.trim().equals("00")) {
-					if (line.length() != 2) {
+					if (line.length() != 31) {
 						check = false;
 					}
 				} else if (transCode.trim().equals("01")) {
