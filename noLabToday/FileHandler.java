@@ -23,7 +23,14 @@ public class FileHandler {
 	public List<String> ticketList = new ArrayList<String>();
 	public List<String> transList = new ArrayList<String>();
 
-
+	/**
+	 * Writes new values to the tickets file
+	 * @return Boolean for file written to or not
+	 * @throws IOException when any issues with the i/o
+	 *                     occur
+	 * @throws FileNotFoundException when the file cannot be found 
+	 * @throws UnsupportedEncodingException when the file encoding is not supported 
+	 *  */
 	public boolean WriteTicketsFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
 		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/stock.at"), "utf-8")))
@@ -45,6 +52,14 @@ public class FileHandler {
 		return true;
 
 	}
+	/**
+	 * Writes new values to the user file
+	 * @return Boolean for file written to or not
+	 * @throws IOException when any issues with the i/o
+	 *                     occur
+	 * @throws FileNotFoundException when the file cannot be found 
+	 * @throws UnsupportedEncodingException when the file encoding is not supported 
+	 *  */
 	public boolean WriteUsersFile() throws UnsupportedEncodingException, FileNotFoundException, IOException
 	{
 		try (Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./files/users.ua"), "utf-8")))
@@ -66,6 +81,15 @@ public class FileHandler {
 		return true;
 
 	}
+	/**
+	 * reads all the files the file and stores the contents in lists of strings
+	 *
+	 * @param userFile the name of the file in string format
+	 * @param ticketsFile the name of the file in string format
+	 * @param transFile the name of the file in string format
+	 * @throws IOException when the file cannot be found or any issues with the i/o
+	 *                     occur
+	 */
 	public void initializeFiles(String userFile, String ticketsFile, String transFile) throws IOException
 	{
 		userList = readFile(userFile);

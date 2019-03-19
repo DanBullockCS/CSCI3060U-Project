@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import noLabToday.FileHandler;
+import java.io.*;
 
 public class TestJunit {
    /*
@@ -15,50 +17,112 @@ public class TestJunit {
    // Testing the WriteTicketsFile()
    public void FileTest1() {
      System.out.println("\nFileTest1:\n-----------------------------------");
+     
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         assertEquals(true,handlerObj.WriteTicketsFile());
+         System.out.println("Tickets File Written To.");
+
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
    }
 
    @Test
    // Testing the WriteUsersFile() method
    public void FileTest2() {
      System.out.println("\nFileTest2:\n-----------------------------------");
-   }
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         assertEquals(true,handlerObj.WriteUsersFile());
+         System.out.println("Users File Written To.");
 
-   @Test
-   // Testing the initializeFiles() method
-   public void FileTest3() {
-     System.out.println("\nFileTest3:\n-----------------------------------");
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
+     
+
    }
 
    @Test
    // Testing the readFile() method
    public void FileTest4() {
      System.out.println("\nFileTest4:\n-----------------------------------");
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         
+         assertNotNull(handlerObj.readFile("./files/stock.at"));
+         assertNotNull(handlerObj.readFile("./files/trans.out"));
+         assertNotNull(handlerObj.readFile("./files/users.ua"));
+         System.out.println("Files not null Verified.");
+
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
+    
    }
 
    @Test
    // Testing the verifyUserFileFormat() method
    public void FileTest5() {
      System.out.println("\nFileTest5:\n-----------------------------------");
+     
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         assertEquals(true, handlerObj.verifyUserFileFormat());
+         System.out.println("Users Format Verified.");
+
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
    }
 
    @Test
    // Testing the verifyTicketsFileFormat() method
    public void FileTest6() {
      System.out.println("\nFileTest6:\n-----------------------------------");
+    
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         assertEquals(true, handlerObj.verifyTicketsFileFormat());
+         System.out.println("Tickets Format Verified.");
+
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
    }
 
    @Test
    // Testing the verifyTransFileFormat() method
    public void FileTest7() {
      System.out.println("\nFileTest7:\n-----------------------------------");
+     
+     try
+     {
+    	 FileHandler handlerObj = new FileHandler();
+         assertEquals(true, handlerObj.verifyTransFileFormat());
+         System.out.println("Trans Format Verified.");
+     }
+	catch(Exception e)
+	{
+		System.out.println(e.getMessage());
+	}
    }
-
-   @Test
-   // Testing the readAllFiles() method
-   public void FileTest8() {
-     System.out.println("\nFileTest8:\n-----------------------------------");
-   }
-
 
 
    // AccountManager Tests:
