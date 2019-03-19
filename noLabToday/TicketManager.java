@@ -282,8 +282,8 @@ public class TicketManager {
 		int count = 0;
 		for (String line : ticketList){
 			if( line != null){
-				if(line.substring(0, 25) == eventName){
-					if(line.substring(26, 41) == sellerName){
+				if(line.substring(0, 25).equals(eventName)){
+					if(line.substring(26, 41).equals(sellerName)){
 						count += 1;
 					}
 				}
