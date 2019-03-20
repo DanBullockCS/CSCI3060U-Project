@@ -3,12 +3,12 @@ package noLabToday;
 import noLabToday.FileHandler;
 import java.io.*;
 
-/*
+/**
 * Class contains the main method that will utilize other classes to run the program
 *
 * @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
 * (Team No Lab Today)
-* @version 0.1
+* @version 0.2
 * @since 2019-03-05
 */
 

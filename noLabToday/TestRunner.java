@@ -1,5 +1,13 @@
 package noLabToday;
-// Junit Class to run all our tests, might have to add package to these classes
+/**
+* Class contains a main to run all the tests in TestJunit.java
+*
+* @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
+* (Team No Lab Today)
+* @version 0.2
+* @since 2019-03-10
+*/
+// Junit Class to run all our tests
 
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;

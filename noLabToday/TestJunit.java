@@ -8,6 +8,14 @@ import java.util.Arrays;
 import noLabToday.FileHandler;
 import java.io.*;
 
+/**
+* Class contains all Junit Test methods to be run by TestRunner
+*
+* @author Danooshan Sureshkumar, Matthew Wierzbicki, and Daniel Bullock
+* (Team No Lab Today)
+* @version 0.2
+* @since 2019-03-10
+*/
 public class TestJunit {
    // Main method test
    @Test
@@ -15,7 +23,7 @@ public class TestJunit {
      System.out.println("\nMainTest:\n-----------------------------------");
      Main main = new Main();
    }
-   
+
    // FileHandler Tests:
    @Test
    // Testing the WriteTicketsFile()
@@ -56,7 +64,7 @@ public class TestJunit {
 
    @Test
    // Testing the readFile() method
-   public void FileTest4() {
+   public void FileTest3() {
      System.out.println("\nFileTest4:\n-----------------------------------");
      try
      {
@@ -77,7 +85,7 @@ public class TestJunit {
 
    @Test
    // Testing the verifyUserFileFormat() method
-   public void FileTest5() {
+   public void FileTest4() {
      System.out.println("\nFileTest5:\n-----------------------------------");
 
      try
@@ -95,7 +103,7 @@ public class TestJunit {
 
    @Test
    // Testing the verifyTicketsFileFormat() method
-   public void FileTest6() {
+   public void FileTest5() {
      System.out.println("\nFileTest6:\n-----------------------------------");
 
      try
@@ -113,7 +121,7 @@ public class TestJunit {
 
    @Test
    // Testing the verifyTransFileFormat() method
-   public void FileTest7() {
+   public void FileTest6() {
      System.out.println("\nFileTest7:\n-----------------------------------");
 
      try
