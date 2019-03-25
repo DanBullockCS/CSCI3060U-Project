@@ -33,3 +33,16 @@ java noLabToday.TestRunner
 ```
 
 Depending on how junit is installed you may need to add a -cp when compiling.
+
+
+# Phase 6 - How to run:
+
+- There is code in the script to compile, comment the lines that have g++ and make in them to skip the compilation
+- Run the bash script for the daily script by running:
+```
+./daily-script
+```
+- And the weekly script by running:
+```
+./weekly-script
+```
