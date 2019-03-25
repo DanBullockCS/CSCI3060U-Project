@@ -32,3 +32,11 @@ cd noLabToday
 cd ..
 # Run Backend
 java noLabToday.Main
+
+# Print out the users.ua and stock.at files at the end of each day
+echo "" # echo for a newline
+echo "The current users file for the day:"
+cat files/users.ua
+echo "" # echo for a newline
+echo "The available tickets file for the day:"
+cat files/stock.at
