@@ -240,11 +240,11 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
 
   std::cout << "Enter in the username you wish to add credit to" << std::endl;
 
-  std::getline(std::cin,  user_name);
+  std::getline(std::cin, user_name);
 
   std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
-  std::getline(std::cin,  credit_amount);
+  std::getline(std::cin, credit_amount);
 
   User* addCredit_user = login(user_name, file_stream);
 
@@ -267,7 +267,7 @@ std::string Admin::addCredit_Admin(User* curr_user, std::vector<std::string> &tr
   } else {
 
     // coverting credit float to string with correct format
-    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0)+addCredit_user->getCredit());
+    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0));
 
     // creating log
     std::stringstream ss;

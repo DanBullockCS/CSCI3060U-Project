@@ -125,10 +125,10 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
 
       // log
 
-      // calculates the remaining number of tickerts after purchase
+      // calculates the remaining number of tickets after purchase
       int rem_tickets = current_tickets->total_tickets - num_of_tickets;
 
-      // converts remaining numbner of tickets to string and adds padding
+      // converts remaining number of tickets to string and adds padding
       std::string new_ticket_counter = int_to_log(rem_tickets, 3);
 
       // left side
@@ -141,7 +141,7 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
       std::string right_side_price_log = int_to_log(right_side_price, 2);
 
 
-      //creates a string stream to create a string to be sent to the log_transaction() f, trans_logunction
+      //creates a string stream to create a string to be sent to the log_transaction(), trans_log function
       std::stringstream ss;
       ss << "04 " << current_tickets->event_title << " "
          << current_tickets->seller_username << " "
@@ -151,7 +151,7 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
 
       std::cout << log << std::endl; // debug for checking log
 
-      // using error srting to alert user of completion
+      // using error sorting to alert user of completion
       error = "Transaction Completed!!\n";
 
       log_transaction(log, trans_log);
@@ -271,7 +271,7 @@ std::string User::addCredit_Standard(User* curr_user, std::vector<std::string> &
   std::string credit_amount;
   std::cout << "Enter in the amount of credit you wish to add" << std::endl;
 
-  std::getline(std::cin,  credit_amount);
+  std::getline(std::cin, credit_amount);
   // error checking
   if (atoi(credit_amount.c_str()) > 1000){
     error = "ERR: Max credit of $1000 per session to be added exceeded\n";
@@ -287,7 +287,7 @@ std::string User::addCredit_Standard(User* curr_user, std::vector<std::string> &
 
   } else {
 
-    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0)+curr_user->getCredit());
+    std::string credit_log = credit_to_log(std::strtof(credit_amount.c_str(),0));
 
     std::stringstream ss;
     ss << "06 " << curr_user->getUserName() << " "
