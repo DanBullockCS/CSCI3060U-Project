@@ -115,6 +115,29 @@ public class TicketManager {
 		}
 		return name;
 	}
+  /**
+  * This method finds the index of a name in the userlist
+  * @param String sellerName - the name of the seller
+  * @param List<String> userList - the list of users
+  * @return: the index of the string being searched for.
+  */
+  int findNewIndex(String sellerName, List<String> userList){
+    int nameindex = 0;
+    boolean found = false;
+    int i = 0;
+    for (String line : userList){
+      if (line != null){
+        if (found == false){
+          if (line.substring(0,15).equals(sellersName)){
+            nameindex = i;
+            sellerFound = true;
+          }
+        }
+      }
+      i += 1;
+    }
+    return nameindex;
+  }
 
   /**
   * do buy transaction in ticketList
@@ -258,6 +281,7 @@ public class TicketManager {
 			ticketList.add(updatedTicket);
 			userList.remove(buyer_index);
 			userList.add(updatedBuyer);
+      seller_index = findNewIndex(sellersUsername, userList);
 			userList.remove(seller_index);
 			userList.add(updatedSeller);
 			System.out.println("Transaction completed successfully!");
