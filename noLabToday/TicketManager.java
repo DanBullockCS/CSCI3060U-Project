@@ -121,16 +121,16 @@ public class TicketManager {
   * @param List<String> userList - the list of users
   * @return: the index of the string being searched for.
   */
-  int findNewIndex(String sellerName, List<String> userList){
+  public int findNewIndex(String sellerName, List<String> userList){
     int nameindex = 0;
     boolean found = false;
     int i = 0;
     for (String line : userList){
       if (line != null){
         if (found == false){
-          if (line.substring(0,15).equals(sellersName)){
+          if (line.substring(0,15).equals(sellerName)){
             nameindex = i;
-            sellerFound = true;
+            found = true;
           }
         }
       }
@@ -270,7 +270,7 @@ public class TicketManager {
 		}
 		String updatedBuyer = buyerUsername + " " + buyerPrivelege + " " + string_new_buyers_credit;
 		String updatedSeller = sellersUsername + " " + sellerPrivelege + " " + string_new_sellers_credit;
-		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + trans_line_amountOfTickets + " " + trans_line.substring(49, 55);
+		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + trans_line.substring(45, 48) + " " + trans_line.substring(49, 55);
 
 		//One last check to make sure buyer and seller are not the same
 		if (buyerUsername.equals(sellersUsername)){

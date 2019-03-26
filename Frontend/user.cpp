@@ -90,7 +90,6 @@ std::string User::buy(User* curr_user, std::vector<std::string> &trans_log, File
   current_tickets = get_tickets(event_t, seller_username, file_stream);
 
   /*
-  TODO
   make a normalizer function for main.cpp and fileio.cpp to use
   */
   // normalizes the user name to 15 chars

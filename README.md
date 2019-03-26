@@ -40,9 +40,12 @@ Depending on how junit is installed you may need to add a -cp when compiling.
 - There is code in the script to compile, comment the lines that have g++ and make in them to skip the compilation
 - Run the bash script for the daily script by running:
 ```
-./daily-script
+./daily-script 1
+# Pass 1 as an argument to indicate testing in the ../inputs/Day1/ Folder
 ```
 - And the weekly script by running:
 ```
 ./weekly-script
 ```
+
+- Everything handed in with Phase 6 is in the PRINTOUTS folder, this excludes the scripts which are in the main directory.

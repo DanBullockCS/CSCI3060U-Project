@@ -1,0 +1,74 @@
+The current users file for day 1:
+user04          SS 000000.00
+UserCreditMax   FS 999999.99
+user01          AA 000330.00
+user02          FS 000025.00
+user06          AA 000419.00
+
+The available tickets file for day 1:
+run real fast event       user01          100 015.00
+airpods meetup            user01          003 100.00
+i give you a dollar       user02          009 002.00
+graphics exam             user01          062 005.00
+
+The current users file for day 2:
+UserCreditMax   FS 999999.99
+user06          AA 000419.00
+user01          AA 000430.00
+user02          FS 000275.00
+user07          FS 000200.00
+
+The available tickets file for day 2:
+run real fast event       user01          100 015.00
+airpods meetup            user01          003 100.00
+graphics exam             user01          062 005.00
+i give you a dollar       user02          006 002.00
+apple picking             user02          090 007.00
+
+The current users file for day 3:
+user06          AA 000419.00
+user07          FS 000200.00
+user02          FS 000422.00
+user01          AA 000634.00
+user08          BS 000010.00
+
+The available tickets file for day 3:
+run real fast event       user01          100 015.00
+graphics exam             user01          062 005.00
+apple picking             user02          090 007.00
+i give you a dollar       user02          006 002.00
+airpods meetup            user01          002 100.00
+leos lab                  user01          030 020.00
+
+The current users file for day 4:
+user06          AA 001319.00
+user07          FS 000200.00
+user01          AA 000838.00
+user02          FS 000569.00
+user09          SS 000085.00
+
+The available tickets file for day 4:
+run real fast event       user01          100 015.00
+graphics exam             user01          062 005.00
+apple picking             user02          090 007.00
+leos lab                  user01          030 020.00
+airpods meetup            user01          002 100.00
+i give you a dollar       user02          005 002.00
+bob jones party           user02          004 100.00
+
+The current users file for day 5:
+user06          AA 002539.00
+user07          FS 000200.00
+user01          AA 000945.00
+user02          FS 000813.00
+user10          AA 000020.00
+
+The available tickets file for day 5:
+run real fast event       user01          100 015.00
+graphics exam             user01          062 005.00
+apple picking             user02          090 007.00
+leos lab                  user01          030 020.00
+airpods meetup            user01          002 100.00
+i give you a dollar       user02          005 002.00
+bob jones party           user02          003 100.00
+Kevin LIVE                user01          100 060.00

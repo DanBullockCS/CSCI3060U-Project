@@ -2,8 +2,8 @@
 # Daily script
 # (comment line 10 and 31 to run script faster and skip compiling)
 
-inputs="../inputs/Day1/"
-merged="../files/trans.out"
+inputs="../inputs/Day"$1"/" # Folders with .inp files
+merged="../files/trans.out" # The merged trans.out file
 
 cd Frontend/
 # Compile the frontend 
@@ -13,7 +13,7 @@ cd Frontend/
 index=0
 for i in $inputs*.inp
 do
-	# run the frontend
+	# Run the frontend
 	./ticket-seller ../files/users.ua ../files/stock.at ../files/$index.out < $i
 	# Append to the merged trans.out
 	cat ../files/$index.out >> $merged
@@ -33,10 +33,12 @@ cd ..
 # Run Backend
 java noLabToday.Main
 
-# Print out the users.ua and stock.at files at the end of each day
-echo "" # echo for a newline
-echo "The current users file for the day:"
-cat files/users.ua
-echo "" # echo for a newline
-echo "The available tickets file for the day:"
-cat files/stock.at
+# Save the users.ua and stock.at at the end of the day to print at the end of the week
+touch output.txt
+# Save the output of the users.ua and stock.at files at the end of each day
+echo "" >> output.txt # echo for a newline
+echo "The current users file for day "$1": " >> output.txt
+cat files/users.ua >> output.txt
+echo "" >> output.txt # echo for a newline
+echo "The available tickets file for day "$1": " >> output.txt 
+cat files/stock.at >> output.txt

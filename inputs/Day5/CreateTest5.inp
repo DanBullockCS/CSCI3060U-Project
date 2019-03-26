@@ -1,7 +1,8 @@
 login
 user01
-addcredit
-user01
-100
+create
+user10
+AA
+20
 logout
 exit
