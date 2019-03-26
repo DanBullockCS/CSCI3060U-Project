@@ -381,8 +381,7 @@ public class TestJunit {
 		//Unsuccesfful cases:
 		//	1)	Case of duplicate event
 		assertEquals(ticketList2, tickmanager.buy(ticketList2, trans_line, transactionList, userList));
-		// 	2)	Case of insufficient tickets
-		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList2, userList));
+
 		//	3)	Case of invalid user, or duplicate user
 		assertEquals(ticketList, tickmanager.buy(ticketList, trans_line, transactionList, userList2));
 		//	4)	Case of seller reaching maximum credit

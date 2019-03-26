@@ -219,15 +219,10 @@ public class TicketManager {
 		double new_buyers_credit = buyerCredits - ticketPrice;
 		String string_new_sellers_credit = String.valueOf(new_sellers_credit);
 		String string_new_buyers_credit = String.valueOf(new_buyers_credit);
-		int remainingTickets = amountOfTickets - trans_line_amountOfTickets;
-		String new_amountOfTickets = String.valueOf(remainingTickets);
 		String string_ticketPrice = String.valueOf(ticketPrice);
 
 
 		//Add padding to amountOfTickets
-		while(new_amountOfTickets.length() < 3){
-			new_amountOfTickets = "0" + new_amountOfTickets;
-		}
 		if (new_sellers_credit > 999999.99){
 			System.out.println("Seller max credit reached cannot proceed, cancelling transaction.");
 			return ticketList;
@@ -252,7 +247,7 @@ public class TicketManager {
 		}
 		String updatedBuyer = buyerUsername + " " + buyerPrivelege + " " + string_new_buyers_credit;
 		String updatedSeller = sellersUsername + " " + sellerPrivelege + " " + string_new_sellers_credit;
-		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + new_amountOfTickets + " " + trans_line.substring(49, 55);
+		String updatedTicket = trans_line_eventName + " " + sellersUsername + " " + trans_line_amountOfTickets + " " + trans_line.substring(49, 55);
 
 		//One last check to make sure buyer and seller are not the same
 		if (buyerUsername.equals(sellersUsername)){
